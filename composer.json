@@ -1,0 +1,21 @@
+{
+    "name": "greeschenko/yii2-file",
+    "description": "Highly variable file and img upload and attachment plagin",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","yii2-file","file upload","file attach","greeschenko"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Oleksiy Hryshchenko",
+            "email": "greeschenko@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "greeschenko\\file\\": ""
+        }
+    }
+}
