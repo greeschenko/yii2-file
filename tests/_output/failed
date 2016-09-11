@@ -1,0 +1,4 @@
+tests/acceptance/FrontCest.php:tryTestPageWork
+tests/acceptance/FrontCest.php:tryUploadImgs
+tests/acceptance/FrontCest.php:tryEditImgsMeta
+tests/acceptance/FrontCest.php:tryViewImgs
