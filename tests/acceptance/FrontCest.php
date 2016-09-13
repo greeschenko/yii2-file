@@ -1,6 +1,5 @@
 <?php
 
-
 class FrontCest
 {
     public function _before(AcceptanceTester $I)
@@ -29,7 +28,14 @@ class FrontCest
         //файли на мете после перезагрузки страницы
         $I->wantTo('check img upload');
         $I->amOnPage('/file/test');
-        //TODO разобрать методи аякс загрузки изображений для тестов
+        //https://blueimp.github.io/jQuery-File-Upload/basic.html
+        //http://tutorialzine.com/2013/05/mini-ajax-file-upload-form/
+        /*$I->attachFile('#fileuploadfield',  'test.jpg');
+        $myVar = $I->executeJS('return $("#myField").val()');*/
+
+        //TODO использовать https://blueimp.github.io/jQuery-File-Upload/basic.html
+        //простой attachFile в нужный инпут должен запустить скрипт
+
         $I->attachFile('#fileuploadfield',  'test.jpg');
         $I->attachFile('#fileuploadfield',  'test.jpg');
         $I->see('Files uploaded successful!');
@@ -71,24 +77,58 @@ class FrontCest
         /*редактировать
             окно со всеми вариантами
             возможность рекропа каждого варианта*/
+
+        $I->wantTo('try to edit img');
+        $I->amOnPage('/file/test');
+        $I->click('#fileitem_0_edit');
+        $I->see('#file_edit_modal');
+        $I->see('#file_reupload');
+        $I->see('#file_size_item_0');
+        $I->see('#file_size_item_1');
+        $I->see('#file_size_item_2');
+
+        $I->click('#file_reupload');
+        //TODO использовать https://blueimp.github.io/jQuery-File-Upload/basic.html
+        //простой attachFile в нужный инпут должен запустить скрипт
+
+        $I->click('#file_size_item_0_recrop');
+        $I->see('#file_recrop_modal');
         //TODO попробовать эмулировать драгндроп через $I->executeJS(...)
         // $('#element').simulate('drag', { dx: 50, dy: 50 });
     }
 
     public function tryChangeImgPosition(AcceptanceTester $I)
     {
+        //TODO попробовать эмулировать драгндроп через $I->executeJS(...)
+        // $('#element').simulate('drag', { dx: 50, dy: 50 });
+        $I->wantTo('try to change img position');
+        $I->amOnPage('/file/test');
     }
 
     public function trySetImgMain(AcceptanceTester $I)
     {
+        $I->wantTo('try set img main');
+        $I->amOnPage('/file/test');
+        $I->click('#fileitem_0_setmain');
+        $I->reloadPage();
+        $I->see('#fileitem_0.main');
     }
 
     public function tryUnSetImgMain(AcceptanceTester $I)
     {
+        $I->wantTo('try set img not main');
+        $I->amOnPage('/file/test');
+        $I->click('#fileitem_0_setmain');
+        $I->reloadPage();
+        $I->dontSee('#fileitem_0.main');
     }
 
     public function tryDeleteImg(AcceptanceTester $I)
     {
+        $I->wantTo('try set img not main');
+        $I->amOnPage('/file/test');
+        $I->click('#fileitem_0_delete');
+        $I->see('File delete successful!');
     }
 
     public function tryUploadCastomFile(AcceptanceTester $I)
