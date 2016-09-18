@@ -11,6 +11,7 @@ class UploadModel extends Model
     /**
      * @var UploadedFile[]
      */
+    public $module;
     public $filedata;
     public $path = 'uploads/';
     public $urlpath = '';
@@ -24,6 +25,13 @@ class UploadModel extends Model
     public $tumbQ = 70;
     public $maxTumbHW = 280;
     public $minTumbHW = 180;
+
+    public function init()
+    {
+        parent::init();
+
+        $this->module = Yii::$app->getModule('file');
+    }
 
     public function rules()
     {
@@ -73,43 +81,43 @@ class UploadModel extends Model
                     $h = $img[1];
 
                     if ($h > $this->maxImgH and $w > $this->maxImgW) {
-                        Yii::$app->image
+                        $this->module->image
                             ->load($src)
                             ->resize($this->maxImgW, $this->maxImgH, \yii\image\drivers\Image::AUTO)
                             ->save($this->path.$filename.'_r.jpg',$this->imgQ);
                     } else {
-                        Yii::$app->image
+                        $this->module->image
                             ->load($src)
                             ->save($this->path.$filename.'_r.jpg',$this->imgQ);
                     }
 
-                    Yii::$app->image
+                    $this->module->image
                         ->load($src)
                         ->resize($this->mid, $this->mid, \yii\image\drivers\Image::AUTO)
                         ->save($this->path.$filename.'_m.jpg',$this->tumbQ);
 
-                    Yii::$app->image
+                    $this->module->image
                         ->load($src)
                         ->resize($this->small, $this->small, \yii\image\drivers\Image::AUTO)
                         ->save($this->path.$filename.'_s.jpg',$this->tumbQ);
 
-                    Yii::$app->image
+                    $this->module->image
                         ->load($src)
                         ->resize($this->maxTumbHW, $this->maxTumbHW, \yii\image\drivers\Image::ADAPT)
                         ->background('#000')
                         ->save($this->path.$filename.'_a.jpg',$this->tumbQ);
 
-                    Yii::$app->image
+                    $this->module->image
                         ->load($src)
                         ->resize($this->maxTumbHW, $this->maxTumbHW, \yii\image\drivers\Image::CROP)
                         ->save($this->path.$filename.'_c.jpg',$this->tumbQ);
 
-                    Yii::$app->image
+                    $this->module->image
                         ->load($src)
                         ->resize($this->minTumbHW, $this->minTumbHW, \yii\image\drivers\Image::AUTO)
                         ->save($this->path.$filename.'_t.jpg',$this->tumbQ);
 
-                    if (!$model) {
+                    /*if (!$model) {
                         $model = new Files();
                         $model->name = $filename;
                         $model->path = $timedir;
@@ -129,15 +137,15 @@ class UploadModel extends Model
                         if ( !$model->save() ) {
                             throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
                         }
-                    }
+                    }*/
 
                     $res[] = [
-                        'id'=>$model->id,
+                        //'id'=>$model->id,
                         'name'=>$filename,
                         'url'=>'/'.$this->path.$filename.'_r.jpg',
                         'thumbnailUrl'=>'/'.$this->path.$filename.'_t.jpg',
                         'size'=>$file->size,
-                        'deleteUrl'=>'/files/delete/?id='.$model->id,
+                        //'deleteUrl'=>'/files/delete/?id='.$model->id,
                         'deleteType'=>'POST',
                         'is_image'=>1,
                     ];
