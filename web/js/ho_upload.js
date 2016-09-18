@@ -13,6 +13,8 @@ HO_upload.prototype = {
         self.filefield.fileupload(self.cliOpt);
 
         self.filefield.on('fileuploaddone', function(e, data) {
+            console.log(data);
+            return false;
             var id = data.result.files[0].id;
             $.ajax({
                 method: "GET",

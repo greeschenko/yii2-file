@@ -15,6 +15,13 @@ class Module extends \yii\base\Module
     {
         parent::init();
         $this->initI18N();
+
+        $this->components = [
+            'image' => [
+                'class' => 'yii\image\ImageDriver',
+                'driver' => 'GD',  //GD or Imagick
+            ],
+        ];
     }
 
     public function initI18N()

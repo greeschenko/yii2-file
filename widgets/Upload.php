@@ -61,7 +61,7 @@ class Upload extends Widget
         );
 
         $res['data-groupcode'] = $this->groupcode;
-        $res['data-url'] = $this->preset['clientOptions']['url'];
+        $res['data-url'] = $this->preset['clientOptions']['url'].'?type='.$this->type;
 
         return $res;
     }

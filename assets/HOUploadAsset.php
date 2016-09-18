@@ -17,5 +17,6 @@ class HOUploadAsset extends AssetBundle
     public $depends = [
         'yii\web\JqueryAsset',
         'yii\bootstrap\BootstrapAsset',
+        '\rmrevin\yii\fontawesome\AssetBundle',
     ];
 }

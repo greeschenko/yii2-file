@@ -32,7 +32,7 @@ class UploadModel extends Model
                 ['filedata'],
                 'file',
                 'skipOnEmpty' => false,
-                /*'extensions' => $this->extensions,*/
+                'extensions' => $this->extensions,
                 'maxFiles' => $this->maxFiles
             ],
         ];
