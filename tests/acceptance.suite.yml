@@ -7,6 +7,12 @@
 class_name: AcceptanceTester
 modules:
     enabled:
-        - PhpBrowser:
+        #- PhpBrowser:
+            #url: http://yii2constructive.ga/
+        #- \Helper\Acceptance
+        - WebDriver
+    config:
+        WebDriver:
             url: http://yii2constructive.ga/
-        - \Helper\Acceptance
+            browser: firefox
+            restart: false

@@ -28,19 +28,16 @@ class FrontCest
         //файли на мете после перезагрузки страницы
         $I->wantTo('check img upload');
         $I->amOnPage('/file/test');
-        //https://blueimp.github.io/jQuery-File-Upload/basic.html
-        //http://tutorialzine.com/2013/05/mini-ajax-file-upload-form/
-        /*$I->attachFile('#fileuploadfield',  'test.jpg');
-        $myVar = $I->executeJS('return $("#myField").val()');*/
 
-        //TODO использовать https://blueimp.github.io/jQuery-File-Upload/basic.html
-        //простой attachFile в нужный инпут должен запустить скрипт
-
+        $I->click('#fileuploadfield');
+        $I->click('#fileuploadfield');
         $I->attachFile('#fileuploadfield',  'test.jpg');
-        $I->attachFile('#fileuploadfield',  'test.jpg');
-        $I->see('Files uploaded successful!');
-        $I->see('#fileitem_0');
-        $I->see('#fileitem_1');
+        $I->attachFile('#fileuploadfield',  'test1.jpg');
+        if (method_exists($I, 'wait')) {
+            $I->wait(5);
+        }
+        $I->see('test.jpg');
+        $I->see('test1.jpg');
     }
 
     public function tryEditImgsMeta(AcceptanceTester $I)

@@ -12,7 +12,8 @@
     ],
     "require": {
         "yiisoft/yii2": "*",
-        "2amigos/yii2-file-upload-widget": "~1.0"
+        "2amigos/yii2-file-upload-widget": "~1.0",
+        "rmrevin/yii2-fontawesome": "~2.12"
     },
     "autoload": {
         "psr-4": {

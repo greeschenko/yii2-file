@@ -1,4 +1,7 @@
-tests/acceptance/FrontCest.php:tryTestPageWork
 tests/acceptance/FrontCest.php:tryUploadImgs
 tests/acceptance/FrontCest.php:tryEditImgsMeta
 tests/acceptance/FrontCest.php:tryViewImgs
+tests/acceptance/FrontCest.php:tryEditImgs
+tests/acceptance/FrontCest.php:trySetImgMain
+tests/acceptance/FrontCest.php:tryUnSetImgMain
+tests/acceptance/FrontCest.php:tryDeleteImg

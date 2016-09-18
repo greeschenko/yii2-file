@@ -6,7 +6,7 @@ use yii\base\Model;
 use yii\web\UploadedFile;
 use yii\base\NotSupportedException;
 
-class UploadForm extends Model
+class UploadModel extends Model
 {
     /**
      * @var UploadedFile[]

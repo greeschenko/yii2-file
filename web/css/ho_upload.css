@@ -1,0 +1,13 @@
+.ho_upload_btn {
+    width: 100%;
+    background: #107aa4;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 2px;
+}
+
+.ho_upload_btn:hover {
+    background: #199fd3;
+    -webkit-transition: background 0.5s;
+    transition: background 0.5s;
+}
