@@ -42,6 +42,7 @@ class Upload extends Widget
             'filefield' => $filefield,
             'preset' => $this->preset
         ]);
+        echo $this->render($this->preset['item_tmpl']);
 
         $this->registerClientScript();
     }

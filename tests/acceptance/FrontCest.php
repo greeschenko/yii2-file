@@ -10,6 +10,18 @@ class FrontCest
     {
     }
 
+    private function loginDemo($I)
+    {
+        $I->amOnPage('/user/login/out');
+        $I->amOnPage('/');
+        $I->amOnPage('/user/login');
+        $I->see('Login');
+        $I->fillField('#user-email', 'demo@demo.d');
+        $I->fillField('#user-password', 'demopass');
+        $I->click('login-button');
+        $I->dontSee('.help-block-error');
+    }
+
     // tests
     public function tryTestPageWork(AcceptanceTester $I)
     {
@@ -27,6 +39,7 @@ class FrontCest
             //или по ид + тип элемента
         //файли на мете после перезагрузки страницы
         $I->wantTo('check img upload');
+        $this->loginDemo($I);
         $I->amOnPage('/file/test');
 
         $I->click('#fileuploadfield');

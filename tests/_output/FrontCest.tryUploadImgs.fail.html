@@ -3,31 +3,48 @@
     <meta charset="UTF-8" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="_csrf" name="csrf-param" />
-    <meta content="bmFiS21KWUgPMwMTIy08P1knCBw.Aw8LNCs2BA8bLhpWLTElDH0UFw==" name="csrf-token" />
+    <meta content="M0gudTVyLWZGDRtMBEJZIlcjeCpNGEgvAjkWQUUjTwBqJl8hBTNjDw==" name="csrf-token" />
     <title></title>
     <link rel="stylesheet" href="/assets/689ac8e4/css/bootstrap.css" />
 <link rel="stylesheet" href="/assets/a10fab24/css/jquery.fileupload.css" />
+<link rel="stylesheet" href="/assets/c1b4c3be/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/assets/fca38118/css/ho_upload.css" />
 <link rel="stylesheet" href="/css/site.css" /></head>
 <body>
 
 <div class="wrap">
-    <nav class="navbar-inverse navbar-fixed-top navbar" id="w0"><div class="container"><div class="navbar-header"><button data-target="#w0-collapse" data-toggle="collapse" class="navbar-toggle" type="button"><span class="sr-only">Toggle navigation</span>
+    <nav class="navbar-inverse navbar-fixed-top navbar" id="w3"><div class="container"><div class="navbar-header"><button data-target="#w3-collapse" data-toggle="collapse" class="navbar-toggle" type="button"><span class="sr-only">Toggle navigation</span>
 <span class="icon-bar"></span>
 <span class="icon-bar"></span>
-<span class="icon-bar"></span></button><a href="/" class="navbar-brand">My Company</a></div><div class="collapse navbar-collapse" id="w0-collapse"><ul class="navbar-nav navbar-right nav" id="w1"><li><a href="/site/index">Home</a></li>
+<span class="icon-bar"></span></button><a href="/" class="navbar-brand">My Company</a></div><div class="collapse navbar-collapse" id="w3-collapse"><ul class="navbar-nav navbar-right nav" id="w4"><li><a href="/site/index">Home</a></li>
 <li><a href="/site/about">About</a></li>
 <li><a href="/site/contact">Contact</a></li>
 <li><a href="/user/login">Login</a></li></ul></div></div></nav>
     <div class="container">
                 
+
 <h1>File Module Test Page</h1>
 
-
-<span class="btn btn-success fileinput-button">
+<div class="ho_upload_btn fileinput-button">
    <i class="glyphicon glyphicon-plus"></i>
-   <span>Select file...</span>
-   <!-- The file input field used as target for the file upload widget -->
-    <input type="hidden" value="" name="UploadForm[filedata]" /><input type="file" data-url="/file/site/ajax-upload" multiple="" name="UploadForm[filedata]" id="uploadform-filedata" /></span>
+   <span>Select files...</span>
+    <input type="hidden" value="" name="UploadModel[filedata]" /><input type="file" data-url="/file/upload?type=all" data-groupcode="test111" data-clientoptions="{&quot;url&quot;:&quot;\/file\/upload&quot;,&quot;maxFileSize&quot;:10000000,&quot;dataType&quot;:&quot;json&quot;}" multiple="" name="UploadModel[filedata]" id="w0" /></div>
+<div class="ho_upload_res"></div>
+
+
+<div class="ho_upload_btn fileinput-button">
+   <i class="glyphicon glyphicon-plus"></i>
+   <span>Select files...</span>
+    <input type="hidden" value="" name="UploadModel[filedata]" /><input type="file" data-url="/file/upload?type=all" data-groupcode="test222" data-clientoptions="{&quot;url&quot;:&quot;\/file\/upload&quot;,&quot;maxFileSize&quot;:10000000,&quot;dataType&quot;:&quot;json&quot;}" multiple="" name="UploadModel[filedata]" id="w1" /></div>
+<div class="ho_upload_res"></div>
+
+
+<div class="ho_upload_btn fileinput-button">
+   <i class="glyphicon glyphicon-plus"></i>
+   <span>Select files...</span>
+    <input type="hidden" value="" name="UploadModel[filedata]" /><input type="file" data-url="/file/upload?type=all" data-groupcode="test222" data-clientoptions="{&quot;url&quot;:&quot;\/file\/upload&quot;,&quot;maxFileSize&quot;:10000000,&quot;dataType&quot;:&quot;json&quot;}" multiple="" name="UploadModel[filedata]" id="w2" /></div>
+<div class="ho_upload_res"></div>
+
     </div>
 </div>
 
@@ -43,40 +60,9 @@
 <script src="/assets/a10fab24/js/vendor/jquery.ui.widget.js"></script>
 <script src="/assets/a10fab24/js/jquery.iframe-transport.js"></script>
 <script src="/assets/a10fab24/js/jquery.fileupload.js"></script>
-<script src="/assets/89b453c9/yii.js"></script>
+<script src="/assets/fca38118/js/ho_upload.js"></script>
+<script src="/assets/fca38118/js/ho_upload_init.js"></script>
+<script src="/assets/f507f334/yii.js"></script>
 <script src="/assets/689ac8e4/js/bootstrap.js"></script>
-<script type="text/javascript">jQuery(document).ready(function () {
-;jQuery('#uploadform-filedata').fileupload({"maxFileSize":10000000,"dataType":"json","url":"/file/site/ajax-upload"});
-jQuery('#uploadform-filedata').on('fileuploaddone', function (e, data) {
-            var id = data.result.files[0].id;
-            $.ajax({
-                method: "GET",
-                url: "/files/changegroup",
-                data: "id="+id+"&amp;gcode="+currentgcode,
-                dataType: "text",
-                success:function(data, textStatus, xhr) {
-                    $.ajax({
-                        method: "GET",
-                        url: "/files/get-group-list",
-                        data: "gcode="+currentgcode,
-                        dataType: "html",
-                        success:function(data, textStatus, xhr) {
-                            $("#res_"+currentgcode).html(data);
-                            deleteImgInit();
-                        },
-                    });
-                },
-            });
-            console.log(e);
-            console.log(data.result);
-        });
-jQuery('#uploadform-filedata').on('fileuploadfail', function (e, data) {
-            console.log(e);
-            console.log(data);
-        });
-jQuery('#uploadform-filedata').on('fileuploadstart', function (e) {
-            $("#res_"+currentgcode).html('&lt;i class="fa fa-spinner fa-spin fa-2x fa-fw"&gt;&lt;/i&gt;');
-        });
-});</script>
 
-</body><canvas id="fxdriver-screenshot-canvas" style="display: none;" width="887" height="682"></canvas></html>
+</body><canvas id="fxdriver-screenshot-canvas" style="display: none;" width="1440" height="739"></canvas></html>

@@ -19,4 +19,14 @@ class TestController extends Controller
     {
         return $this->render('index');
     }
+
+    /**
+     * test single upload action.
+     *
+     * @return string
+     */
+    public function actionSingle()
+    {
+        return $this->render('single');
+    }
 }

@@ -117,7 +117,7 @@ class UploadModel extends Model
                         ->resize($this->minTumbHW, $this->minTumbHW, \yii\image\drivers\Image::AUTO)
                         ->save($this->path.$filename.'_t.jpg',$this->tumbQ);
 
-                    /*if (!$model) {
+                    if (!$model) {
                         $model = new Files();
                         $model->name = $filename;
                         $model->path = $timedir;
@@ -137,16 +137,14 @@ class UploadModel extends Model
                         if ( !$model->save() ) {
                             throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
                         }
-                    }*/
+                    }
 
                     $res[] = [
-                        //'id'=>$model->id,
+                        'id'=>$model->id,
                         'name'=>$filename,
                         'url'=>'/'.$this->path.$filename.'_r.jpg',
                         'thumbnailUrl'=>'/'.$this->path.$filename.'_t.jpg',
                         'size'=>$file->size,
-                        //'deleteUrl'=>'/files/delete/?id='.$model->id,
-                        'deleteType'=>'POST',
                         'is_image'=>1,
                     ];
 
@@ -181,8 +179,6 @@ class UploadModel extends Model
                         'url'=>'/'.$this->path.$filename.'.'.$ext,
                         /*TODO можно сделать вывод иконок разных'thumbnailUrl'=>'/'.$this->path.$filename.'_t.jpg',*/
                         'size'=>$file->size,
-                        'deleteUrl'=>'/files/delete/?id='.$model->id,
-                        'deleteType'=>'POST',
                         'is_image'=>0,
                     ];
                 }

@@ -51,4 +51,9 @@ class Attachments extends \yii\db\ActiveRecord
             'is_main' => Yii::t('app', 'Is Main'),
         ];
     }
+
+    public function getFile()
+    {
+        return $this->hasOne(Files::className(), ['id' => 'file_id']);
+    }
 }

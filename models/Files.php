@@ -3,6 +3,7 @@
 namespace greeschenko\file\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "files".
@@ -19,6 +20,9 @@ use Yii;
  */
 class Files extends \yii\db\ActiveRecord
 {
+    const TYPE_IMG = 1;
+    const TYPE_DOC = 2;
+
     /**
      * @inheritdoc
      */
@@ -30,10 +34,27 @@ class Files extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    public function beforeSave($insert)
+    {
+        $this->user_id = Yii::$app->user->identity->id;
+
+        return parent::beforeSave($insert);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
-            [['name', 'path', 'ext', 'user_id', 'created_at', 'updated_at'], 'required'],
+            [['name', 'path', 'ext'], 'required'],
             [['user_id', 'created_at', 'updated_at', 'status', 'type'], 'integer'],
             [['name', 'path'], 'string', 'max' => 255],
             [['ext'], 'string', 'max' => 10],
