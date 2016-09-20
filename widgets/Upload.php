@@ -16,7 +16,6 @@ class Upload extends Widget
     public $preset;
     public $module;
     public $options = [];
-    public $clientOptions = [];
 
     public function init()
     {
@@ -43,6 +42,7 @@ class Upload extends Widget
             'preset' => $this->preset
         ]);
         echo $this->render($this->preset['item_tmpl']);
+        echo Html::tag('div','',['class' => 'ho_upload_errors']);
 
         $this->registerClientScript();
     }
@@ -56,13 +56,8 @@ class Upload extends Widget
 
         $res['id'] = ($this->id != null) ? $this->id : $this->getId();
 
-        $res['data-clientOptions'] = array_merge(
-            $this->preset['clientOptions'],
-            $this->clientOptions
-        );
-
         $res['data-groupcode'] = $this->groupcode;
-        $res['data-url'] = $this->preset['clientOptions']['url'].'?type='.$this->type;
+        $res['data-url'] = $this->preset['url'].'?type='.$this->type;
 
         return $res;
     }

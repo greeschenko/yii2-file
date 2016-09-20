@@ -19,7 +19,10 @@ class UploadController extends Controller
     {
         $preset = $this->module->presets[$type];
 
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
         $model = new $preset['model'];
+        $model->preset = $type;
 
         if (Yii::$app->request->isPost) {
             $model->filedata = \yii\web\UploadedFile::getInstances(
@@ -28,8 +31,9 @@ class UploadController extends Controller
             );
 
             if ( $data = $model->upload() ) {
-                echo $data;
-                exit;
+                return $data;
+            } else {
+                return $model->errors;
             }
         }
     }

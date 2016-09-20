@@ -13,9 +13,11 @@ class m160918_214111_add_files_tbl extends Migration
 
         $this->createTable('{{%files}}', [
             'id' => $this->primaryKey(),
-            'name' => $this->string()->notNull(),
-            'path' => $this->string()->notNull(),
-            'ext' => $this->string(10)->notNull(),
+            'name' => $this->string(),
+            'path' => $this->string(),
+            'ext' => $this->string(10),
+            'preset' => $this->string(),
+            'size' => $this->integer(),
             'user_id' => $this->integer()->notNull(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),

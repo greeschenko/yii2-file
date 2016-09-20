@@ -4,7 +4,6 @@ namespace greeschenko\file\models;
 use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;
-use yii\base\NotSupportedException;
 
 class UploadModel extends Model
 {
@@ -12,19 +11,10 @@ class UploadModel extends Model
      * @var UploadedFile[]
      */
     public $module;
+    public $preset;
     public $filedata;
     public $path = 'uploads/';
     public $urlpath = '';
-    public $extensions = 'png, jpg, jpeg, gif, tiff, doc, docx, xls, xlsx, pdf, zip, rar, PNG, JPG, JPEG, GIF, TIFF, DOC, DOCX, XLS, XLSX, PDF, ZIP, RAR';
-    public $maxFiles = 1000;
-    public $maxImgW = 1920;
-    public $maxImgH = 1080;
-    public $mid = 1400;
-    public $small = 840;
-    public $imgQ = 90;
-    public $tumbQ = 70;
-    public $maxTumbHW = 280;
-    public $minTumbHW = 180;
 
     public function init()
     {
@@ -36,13 +26,10 @@ class UploadModel extends Model
     public function rules()
     {
         return [
-            [
-                ['filedata'],
-                'file',
-                'skipOnEmpty' => false,
-                'extensions' => $this->extensions,
-                'maxFiles' => $this->maxFiles
-            ],
+            array_merge(
+                [ 'filedata', 'file', 'skipOnEmpty' => false, ],
+                $this->module->presets[$this->preset]['rules']
+            )
         ];
     }
 
@@ -62,8 +49,7 @@ class UploadModel extends Model
         $this->path = $this->path.$timedir;
 
         if ($this->validate()) {
-            $n = 0;
-            foreach ($this->filedata as $file) {
+            foreach ($this->filedata as $n=>$file) {
                 $ext = strtolower($file->extension);
                 $filename = trim($file->baseName);
                 $filename = $this->translite($filename);
@@ -73,119 +59,63 @@ class UploadModel extends Model
                 $file->saveAs($src);
                 //image lib info https://github.com/yurkinx/yii2-image
 
-                if ($ext == 'jpg' or $ext == 'jpeg' or $ext == 'gif' or $ext == 'png'
-                     or $ext == 'JPG' or $ext == 'JPEG' or $ext == 'GIF' or $ext == 'PNG'
+                if ( in_array($ext,[ 'png', 'jpg', 'jpeg', 'gif',
+                    'tiff', 'PNG', 'JPG', 'JPEG', 'GIF', 'TIFF', ])
                 ) {
                     $img = getimagesize($src);
                     $w = $img[0];
                     $h = $img[1];
+                    $sizes = $this->module->presets[$this->preset]['sizes'];
 
-                    if ($h > $this->maxImgH and $w > $this->maxImgW) {
+                    foreach ($sizes as $i=>$one) {
                         $this->module->image
                             ->load($src)
-                            ->resize($this->maxImgW, $this->maxImgH, \yii\image\drivers\Image::AUTO)
-                            ->save($this->path.$filename.'_r.jpg',$this->imgQ);
-                    } else {
-                        $this->module->image
-                            ->load($src)
-                            ->save($this->path.$filename.'_r.jpg',$this->imgQ);
+                            ->resize($one['width'], $one['height'],
+                                constant('\yii\image\drivers\Image::'.$one['mode']))
+                            ->save($this->path.$filename.'_'.$i.'_'.'.'.$ext,$one['quality']);
                     }
-
-                    $this->module->image
-                        ->load($src)
-                        ->resize($this->mid, $this->mid, \yii\image\drivers\Image::AUTO)
-                        ->save($this->path.$filename.'_m.jpg',$this->tumbQ);
-
-                    $this->module->image
-                        ->load($src)
-                        ->resize($this->small, $this->small, \yii\image\drivers\Image::AUTO)
-                        ->save($this->path.$filename.'_s.jpg',$this->tumbQ);
-
-                    $this->module->image
-                        ->load($src)
-                        ->resize($this->maxTumbHW, $this->maxTumbHW, \yii\image\drivers\Image::ADAPT)
-                        ->background('#000')
-                        ->save($this->path.$filename.'_a.jpg',$this->tumbQ);
-
-                    $this->module->image
-                        ->load($src)
-                        ->resize($this->maxTumbHW, $this->maxTumbHW, \yii\image\drivers\Image::CROP)
-                        ->save($this->path.$filename.'_c.jpg',$this->tumbQ);
-
-                    $this->module->image
-                        ->load($src)
-                        ->resize($this->minTumbHW, $this->minTumbHW, \yii\image\drivers\Image::AUTO)
-                        ->save($this->path.$filename.'_t.jpg',$this->tumbQ);
-
-                    if (!$model) {
-                        $model = new Files();
-                        $model->name = $filename;
-                        $model->path = $timedir;
-                        $model->ext = 'jpg';
-                        $model->type = Files::TYPE_IMG;
-                        if ( !$model->save() ) {
-                            throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
-                        }
-                    } else {
-                        foreach ($model->getFormatList() as $one) {
-                            @unlink($model->path.$model->name.$one.$model->ext);
-                        }
-                        $model->name = $filename;
-                        $model->path = $timedir;
-                        $model->ext = 'jpg';
-                        $model->type = Files::TYPE_IMG;
-                        if ( !$model->save() ) {
-                            throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
-                        }
-                    }
-
-                    $res[] = [
-                        'id'=>$model->id,
-                        'name'=>$filename,
-                        'url'=>'/'.$this->path.$filename.'_r.jpg',
-                        'thumbnailUrl'=>'/'.$this->path.$filename.'_t.jpg',
-                        'size'=>$file->size,
-                        'is_image'=>1,
-                    ];
-
-                    $n++;
-                    @unlink($src);
+                    $type = Files::TYPE_IMG;
                 } else {
-                    if (!$model) {
-                        $model = new Files();
-                        $model->name = $filename;
-                        $model->path = $timedir;
-                        $model->ext = $ext;
-                        $model->type = Files::TYPE_DOC;
-                        if ( !$model->save() ) {
-                            throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
-                        }
-                    } else {
-                        foreach ($model->getFormatList() as $one) {
-                            @unlink($model->path.$model->name.$one.$model->ext);
-                        }
-                        $model->name = $filename;
-                        $model->path = $timedir;
-                        $model->ext = $ext;
-                        $model->type = Files::TYPE_DOC;
-                        if ( !$model->save() ) {
-                            throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
-                        }
-                    }
-
-                    $res[] = [
-                        'id'=>$model->id,
-                        'name'=>$filename,
-                        'url'=>'/'.$this->path.$filename.'.'.$ext,
-                        /*TODO можно сделать вывод иконок разных'thumbnailUrl'=>'/'.$this->path.$filename.'_t.jpg',*/
-                        'size'=>$file->size,
-                        'is_image'=>0,
-                    ];
+                    $type = Files::TYPE_DOC;
                 }
+
+                if (!$model) {
+                    $model = new Files();
+                    $model->name = $filename;
+                    $model->path = $timedir;
+                    $model->ext = $ext;
+                    $model->size = $file->size;
+                    $model->preset = $this->preset;
+                    $model->type = $type;
+                    if ( !$model->save() ) {
+                        throw new \yii\web\HttpException(
+                            501 ,
+                            json_encode($model->errors)
+                        );
+                    }
+                } else {
+                    $model->clearAll();
+                    $model->name = $filename;
+                    $model->path = $timedir;
+                    $model->ext = $ext;
+                    $model->size = $file->size;
+                    $model->type = $type;
+                    if ( !$model->save() ) {
+                        throw new \yii\web\HttpException(
+                            501 ,
+                            json_encode($model->errors)
+                        );
+                    }
+                }
+
+                @unlink($src);
+
+                $res = $model->getData();
             }
+
             $files = ['files'=>$res];
 
-            return json_encode($files);
+            return $files;
         } else {
             return false;
         }

@@ -44,18 +44,7 @@ class DoController extends Controller
         if (Yii::$app->request->isGet and Yii::$app->request->isAjax) {
             $data = Attachments::find()->where(['group' => $gcode])->all();
             foreach ($data as $i=>$one) {
-                /*$res[] = [
-                    'id'=>$one->id,
-                    'title' => $one->title,
-                    'description' => $one->description,
-                    'filename'=>$one->name,
-                    'url'=>'/'.$one->path.$one->name.'_r.jpg',
-                    'thumbnailUrl'=>'/'.$this->path.$filename.'_t.jpg',
-                    'size'=>$file->size,
-                    'type'=>1,
-                ];*/
-
-                $res[] = array_merge($one->attributes,$one->file->attributes);
+                $res[] = $one->getData();
             }
         }
 

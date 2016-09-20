@@ -2,6 +2,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 $model = new greeschenko\file\models\UploadModel;
+$module = Yii::$app->getModule('file');
+$model->preset = 'all';
 ?>
 <div class="singleupload-form">
     <?php $form = ActiveForm::begin([

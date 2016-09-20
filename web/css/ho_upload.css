@@ -11,3 +11,8 @@
     -webkit-transition: background 0.5s;
     transition: background 0.5s;
 }
+
+.ho_upload_errors {
+    color: tomato;
+    font-size: 0.9em;
+}

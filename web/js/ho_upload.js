@@ -1,9 +1,9 @@
 var HO_upload = function(el) {
     this.el = el;
     this.filefield = el.find('input[type="file"]');
-    this.cliOpt = this.filefield.data('clientoptions');
     this.gcode = this.filefield.data('groupcode');
     this.res = el.next();
+    this.errors = el.next().next();
     this.init();
 };
 
@@ -11,9 +11,22 @@ HO_upload.prototype = {
     init: function() {
         var self = this;
 
-        self.filefield.fileupload(self.cliOpt);
+        self.filefield.fileupload({
+            'url': '/file/upload',
+            'dataType': 'json',
+        });
 
         self.filefield.on('fileuploaddone', function(e, data) {
+            if (!data.result.files) {
+                self.res.html('');
+                self.errors.append(data.files[0].name + ':<br>');
+                for (var key in data.result) {
+                    for (var i in data.result[key]) {
+                        self.errors.append('>>>> ' + data.result[key][i] + '<br>');
+                    }
+                }
+            }
+
             var id = data.result.files[0].id;
             $.ajax({
                 method: "GET",
@@ -28,7 +41,7 @@ HO_upload.prototype = {
 
         self.filefield.on('fileuploadfail', function(e, data) {
             console.log(e);
-            console.log(data);
+            console.log(data.jqXHR.responseText);
         });
 
         self.filefield.on('fileuploadstart', function(e) {
