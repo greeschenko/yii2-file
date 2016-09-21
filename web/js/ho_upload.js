@@ -3,11 +3,49 @@ var HOUploadItem = function(el, prnt) {
     this.prnt = prnt;
     this.type = el.data('type');
     this.attach = el.data('attach');
+    this.img = el.data('img');
+    this.url = el.data('url');
+    this.name = el.data('name');
+    this.description = el.data('description') || '';
+    this.wrap = el.find('.ho_upload_item_wrap');
+    this.deletebtn = el.find('.delete');
+    this.editbtn = el.find('.edit');
+    this.init();
 };
 
 HOUploadItem.prototype = {
     init: function() {
-        return false;
+        var self = this;
+        self.wrap.bind('click', function() {
+            console.log('view click');
+
+            if (self.type == 1) {
+                var img = '<img src="' + self.img + '" alt="" style="max-width:100%;">';
+                var head = '<h2>' + self.name + '</h2><p>' + self.description + '</p>'
+                self.prnt.viewmodal.find('.modal-body').css('text-align', 'center').html(img);
+                self.prnt.viewmodal.find('.modal-header').html(head);
+                self.prnt.viewmodal.modal();
+            } else if (self.type == 2) {
+                var head = '<h2>' + self.name + '</h2><p>' + self.description + '</p>'
+                var host = 'http://' + window.location.hostname;
+                var docview = '<p><iframe src=http://docs.google.com/viewer?url=' + host + self.url + '&amp;embedded=true width=\"100%\" height=\"640\" style=\"border: none;\"></iframe></p>';
+                self.prnt.viewmodal.find('.modal-header').html(head);
+                self.prnt.viewmodal.find('.modal-body').html(docview);
+                self.prnt.viewmodal.modal();
+            }
+
+
+            return false;
+        });
+        self.deletebtn.bind('click', function() {
+            console.log('delete click');
+            return false;
+        });
+
+        self.editbtn.bind('click', function() {
+            console.log('edit click');
+            return false;
+        });
     },
     view: function() {
         return false;
@@ -89,7 +127,7 @@ HOUpload.prototype = {
                 }
                 self.res.html(r);
                 self.el.find('.ho_upload_item').each(function() {
-                    new HOUploadItem($(this));
+                    new HOUploadItem($(this), self);
                 });
             },
         });

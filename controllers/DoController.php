@@ -45,7 +45,10 @@ class DoController extends Controller
             $data = Attachments::find()->where(['group' => $gcode])->all();
             foreach ($data as $i=>$one) {
                 $res[$i] = $one->file->getData();
-                $res[$i]['attach_id'] = $one->id;
+                if ($one->title != '') {
+                    $res[$i]['name'] = $one->title;
+                }
+                $res[$i]['description'] = $one->description;
             }
         }
 

@@ -50,15 +50,14 @@ class Upload extends Widget
         echo Html::tag('div','',['class' => 'ho_upload_errors']);
 
         Modal::begin([
-            'options' => [ 'class' => 'edit-modal' ],
+            'options' => [ 'class' => 'edit-modal fade' ],
         ]);
-        echo $this->render($this->preset['item_tmpl']);
         Modal::end();
 
         Modal::begin([
-            'options' => [ 'class' => 'view-modal' ],
+            'options' => [ 'class' => 'view-modal fade' ],
+            'size' => "modal-lg",
         ]);
-        echo $this->render($this->preset['item_tmpl']);
         Modal::end();
 
         echo Html::endTag('div');
