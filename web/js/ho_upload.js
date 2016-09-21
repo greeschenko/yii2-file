@@ -1,13 +1,35 @@
-var HO_upload = function(el) {
+var HOUploadItem = function(el, prnt) {
+    this.el = el;
+    this.prnt = prnt;
+    this.type = el.data('type');
+    this.attach = el.data('attach');
+};
+
+HOUploadItem.prototype = {
+    init: function() {
+        return false;
+    },
+    view: function() {
+        return false;
+    },
+    edit: function() {
+        return false;
+    },
+};
+
+var HOUpload = function(el) {
     this.el = el;
     this.filefield = el.find('input[type="file"]');
     this.gcode = this.filefield.data('groupcode');
-    this.res = el.next();
-    this.errors = el.next().next();
+    this.res = el.find('.ho_upload_res');
+    this.tmpl = el.find('.ho_upload_tmpl');
+    this.errors = el.find('.ho_upload_errors');
+    this.editmodal = el.find('.edit-modal');
+    this.viewmodal = el.find('.view-modal');
     this.init();
 };
 
-HO_upload.prototype = {
+HOUpload.prototype = {
     init: function() {
         var self = this;
 
@@ -27,7 +49,8 @@ HO_upload.prototype = {
                 }
             }
 
-            var id = data.result.files[0].id;
+            var id = data.result.files.id;
+
             $.ajax({
                 method: "GET",
                 url: "/file/do/attach",
@@ -48,6 +71,7 @@ HO_upload.prototype = {
             self.res.html('<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i>');
         });
 
+        self.render();
     },
     render: function() {
         var self = this;
@@ -57,10 +81,25 @@ HO_upload.prototype = {
             data: "gcode=" + self.gcode,
             dataType: "json",
             success: function(data, textStatus, xhr) {
-                console.log(data);
-                return false;
-                this.res.html(data);
+                var r = '';
+                for (var i in data) {
+                    console.log(data[i]);
+                    console.log(self.tmpl.html());
+                    r += makeFromTemplate(data[i], self.tmpl.html());
+                }
+                self.res.html(r);
+                self.el.find('.ho_upload_item').each(function() {
+                    new HOUploadItem($(this));
+                });
             },
         });
     },
 };
+
+function makeFromTemplate(obj, html) {
+    for (var i in obj) {
+        html = html.replace(new RegExp('{{' + i + '}}', 'g'), obj[i]);
+    }
+    html = html.replace(new RegExp('{{(.{1,30})}}', 'g'), '');
+    return html;
+}

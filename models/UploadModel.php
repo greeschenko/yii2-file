@@ -13,7 +13,7 @@ class UploadModel extends Model
     public $module;
     public $preset;
     public $filedata;
-    public $path = 'uploads/';
+    public $path = 'uploads';
     public $urlpath = '';
 
     public function init()
@@ -36,7 +36,7 @@ class UploadModel extends Model
     public function upload($model=false)
     {
         $res = [];
-        $timedir = strtotime(date('d-m-Y',time())).'/';
+        $timedir = '/'.strtotime(date('d-m-Y',time())).'/';
 
         if ( !is_dir($this->path) ) {
             mkdir($this->path);
@@ -82,7 +82,7 @@ class UploadModel extends Model
                 if (!$model) {
                     $model = new Files();
                     $model->name = $filename;
-                    $model->path = $timedir;
+                    $model->path = '/'.$this->path;
                     $model->ext = $ext;
                     $model->size = $file->size;
                     $model->preset = $this->preset;
@@ -96,7 +96,7 @@ class UploadModel extends Model
                 } else {
                     $model->clearAll();
                     $model->name = $filename;
-                    $model->path = $timedir;
+                    $model->path = '/'.$this->path;
                     $model->ext = $ext;
                     $model->size = $file->size;
                     $model->type = $type;

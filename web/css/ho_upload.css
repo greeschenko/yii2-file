@@ -16,3 +16,83 @@
     color: tomato;
     font-size: 0.9em;
 }
+
+.ho_upload_item {
+    padding: 5px;
+}
+
+.ho_upload_item_wrap {
+    height: 120px;
+    border: 1px solid #ccc;
+    background: #ffffff;
+    padding: 5px;
+    border-radius: 3px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.ho_upload_item_wrap .delete {
+    position: absolute;
+    top: 0em;
+    right: 0.2em;
+    color: tomato;
+    font-size: 1.5em;
+}
+
+.ho_upload_item_wrap .delete:hover {
+    color: red;
+}
+
+.ho_upload_item_wrap .edit {
+    position: absolute;
+    bottom: 0em;
+    right: 0.2em;
+    color: grey;
+    font-size: 1.5em;
+}
+
+.ho_upload_item_wrap .edit:hover {
+    color: green;
+}
+
+.ho_upload_item_wrap .title {
+    font-size: 0.9em;
+    position: absolute;
+    bottom: 0.2em;
+    width: 85%;
+    z-index: 1;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.ho_upload_item_wrap .icon {
+    font-size: 3em;
+    text-align: center;
+    line-height: 3em;
+}
+
+.ho_upload_item_wrap .img {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    height: 60%;
+    width: 60%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.ho_upload_item_wrap:hover .img {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.ho_upload_item_wrap:hover .icon {
+    font-size: 4em;
+    line-height: 2em;
+}

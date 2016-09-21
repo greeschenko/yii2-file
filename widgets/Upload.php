@@ -7,6 +7,7 @@ use yii\base\Widget;
 use yii\helpers\Html;
 use yii\base\InvalidConfigException;
 use greeschenko\file\assets\UploadAsset;
+use yii\bootstrap\Modal;
 
 class Upload extends Widget
 {
@@ -37,12 +38,30 @@ class Upload extends Widget
             $this->genOptions()
         );
 
+        echo Html::beginTag('div',['class' => 'ho_upload']);
         echo $this->render($this->preset['view'], [
             'filefield' => $filefield,
             'preset' => $this->preset
         ]);
-        echo $this->render($this->preset['item_tmpl']);
+        echo Html::tag(
+            'div',
+            $this->render($this->preset['item_tmpl']),
+            ['class' => 'hidden ho_upload_tmpl']);
         echo Html::tag('div','',['class' => 'ho_upload_errors']);
+
+        Modal::begin([
+            'options' => [ 'class' => 'edit-modal' ],
+        ]);
+        echo $this->render($this->preset['item_tmpl']);
+        Modal::end();
+
+        Modal::begin([
+            'options' => [ 'class' => 'view-modal' ],
+        ]);
+        echo $this->render($this->preset['item_tmpl']);
+        Modal::end();
+
+        echo Html::endTag('div');
 
         $this->registerClientScript();
     }
