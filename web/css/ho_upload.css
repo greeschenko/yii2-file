@@ -56,6 +56,18 @@
     color: green;
 }
 
+.ho_upload_item_wrap .reupload {
+    position: absolute;
+    top: 0em;
+    left: 0.2em;
+    color: lightblue;
+    font-size: 1.5em;
+}
+
+.ho_upload_item_wrap .reupload:hover {
+    color: blue;
+}
+
 .ho_upload_item_wrap .title {
     font-size: 0.9em;
     position: absolute;

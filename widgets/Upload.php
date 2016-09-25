@@ -51,7 +51,9 @@ class Upload extends Widget
 
         Modal::begin([
             'options' => [ 'class' => 'edit-modal fade' ],
+            'header' => '<h2>'.Yii::t('file', 'File Info').'</h2>',
         ]);
+        echo $this->render($this->preset['edit']);
         Modal::end();
 
         Modal::begin([

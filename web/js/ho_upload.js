@@ -10,6 +10,7 @@ var HOUploadItem = function(el, prnt) {
     this.wrap = el.find('.ho_upload_item_wrap');
     this.deletebtn = el.find('.delete');
     this.editbtn = el.find('.edit');
+    this.reupload = el.find('.reupload');
     this.init();
 };
 
@@ -38,12 +39,54 @@ HOUploadItem.prototype = {
             return false;
         });
         self.deletebtn.bind('click', function() {
-            console.log('delete click');
+            self.el.css('background', 'tomato').fadeOut(300, function() {
+                $.ajax({
+                    url: '/file/do/unattach',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: 'id=' + self.attach,
+                    success: function(data, textStatus, jqXHR) {
+                        self.prnt.render();
+                    },
+                });
+            });
             return false;
         });
 
         self.editbtn.bind('click', function() {
-            console.log('edit click');
+            self.prnt.editmodal.modal();
+            $('#attachments-id').val(self.attach);
+            $('#attachments-title').val(self.name);
+            $('#attachments-description').val(self.description);
+            $('#fileeditform_submit').bind('click', function() {
+                var id = $('#attachments-id').val();
+                var title = $('#attachments-title').val();
+                var description = $('#attachments-description').val();
+                $.ajax({
+                    url: '/file/do/change-info',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: 'id=' + id + '&title=' + title + '&description=' + description,
+                    success: function(data, textStatus, jqXHR) {
+                        if (data.result == 'success') {
+                            self.prnt.editmodal.modal('hide');
+                            self.prnt.render();
+                        } else {
+                            alert(data.msg);
+                        }
+                    },
+                });
+                return false;
+            });
+            return false;
+        });
+
+        self.reupload.bind('click', function() {
+            self.prnt.reu = self.attach;
+            self.prnt.filefield.trigger('click');
+            $('body').bind('click', function() {
+                self.prnt.reu = 0;
+            });
             return false;
         });
     },
@@ -57,6 +100,7 @@ HOUploadItem.prototype = {
 
 var HOUpload = function(el) {
     this.el = el;
+    this.reu = 0;
     this.filefield = el.find('input[type="file"]');
     this.gcode = this.filefield.data('groupcode');
     this.res = el.find('.ho_upload_res');
@@ -92,7 +136,7 @@ HOUpload.prototype = {
             $.ajax({
                 method: "GET",
                 url: "/file/do/attach",
-                data: "file_id=" + id + "&gcode=" + self.gcode,
+                data: "file_id=" + id + "&gcode=" + self.gcode + '&replace=' + self.reu,
                 dataType: "json",
                 success: function(data, textStatus, xhr) {
                     self.render();
@@ -119,11 +163,12 @@ HOUpload.prototype = {
             data: "gcode=" + self.gcode,
             dataType: "json",
             success: function(data, textStatus, xhr) {
+                /*console.log(data);
+                return false;*/
+
                 var r = '';
                 for (var i in data) {
-                    console.log(data[i]);
-                    console.log(self.tmpl.html());
-                    r += makeFromTemplate(data[i], self.tmpl.html());
+                    r += self.makefromtmpl(data[i], self.tmpl.html());
                 }
                 self.res.html(r);
                 self.el.find('.ho_upload_item').each(function() {
@@ -132,12 +177,11 @@ HOUpload.prototype = {
             },
         });
     },
-};
-
-function makeFromTemplate(obj, html) {
-    for (var i in obj) {
-        html = html.replace(new RegExp('{{' + i + '}}', 'g'), obj[i]);
+    makefromtmpl: function(obj, html) {
+        for (var i in obj) {
+            html = html.replace(new RegExp('{{' + i + '}}', 'g'), obj[i]);
+        }
+        html = html.replace(new RegExp('{{.*}}', 'g'), '');
+        return html;
     }
-    html = html.replace(new RegExp('{{(.{1,30})}}', 'g'), '');
-    return html;
-}
+};

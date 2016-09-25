@@ -43,12 +43,12 @@ class Attachments extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'group' => Yii::t('app', 'Group'),
-            'file_id' => Yii::t('app', 'File ID'),
-            'title' => Yii::t('app', 'Title'),
-            'description' => Yii::t('app', 'Description'),
-            'is_main' => Yii::t('app', 'Is Main'),
+            'id' => Yii::t('file', 'ID'),
+            'group' => Yii::t('file', 'Group'),
+            'file_id' => Yii::t('file', 'File ID'),
+            'title' => Yii::t('file', 'Title'),
+            'description' => Yii::t('file', 'Description'),
+            'is_main' => Yii::t('file', 'Is Main'),
         ];
     }
 

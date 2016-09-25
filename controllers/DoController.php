@@ -16,16 +16,44 @@ class DoController extends Controller
         $this->module = Yii::$app->getModule('file');
     }
 
-    public function actionAttach($file_id,$gcode)
+    public function actionAttach($file_id,$gcode,$replace)
     {
         $res = [];
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
         if (Yii::$app->request->isGet and Yii::$app->request->isAjax) {
-            $model = new Attachments;
-            $model->group = $gcode;
-            $model->file_id = $file_id;
-            if ($model->save()) {
+            if ($replace == 0) {
+                $model = new Attachments;
+            } else {
+                $model = Attachments::findOne($replace);
+            }
+            if ($model != null) {
+                $model->group = $gcode;
+                $model->file_id = $file_id;
+                if ($model->save()) {
+                    $res['result'] = 'success';
+                } else {
+                    $res['result'] = 'error';
+                    $res['msg'] = $model->errors;
+                }
+            } else {
+                $res['result'] = 'error';
+                $res['msg'] = Yii::t('file', 'File attach filed');
+            }
+        }
+
+        return $res;
+    }
+
+    public function actionUnattach()
+    {
+        $res = [];
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        if (Yii::$app->request->isPost and Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
+            $model = Attachments::findOne($data['id']);
+            if ($model->delete()) {
                 $res['result'] = 'success';
             } else {
                 $res['result'] = 'error';
@@ -49,6 +77,30 @@ class DoController extends Controller
                     $res[$i]['name'] = $one->title;
                 }
                 $res[$i]['description'] = $one->description;
+                $res[$i]['attach_id'] = $one->id;
+            }
+        }
+
+        return $res;
+    }
+
+    public function actionChangeInfo()
+    {
+        $res = [];
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        if (Yii::$app->request->isPost and Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
+            $model = Attachments::findOne($data['id']);
+            if ($model != null) {
+                $model->title = $data['title'];
+                $model->description = $data['description'];
+                if ($model->save()) {
+                    $res['result'] = 'success';
+                }
+            } else {
+                $res['result'] = 'error';
+                $res['msg'] = $model->errors;
             }
         }
 
