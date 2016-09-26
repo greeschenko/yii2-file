@@ -54,19 +54,19 @@ HOUploadItem.prototype = {
         });
 
         self.editbtn.bind('click', function() {
+            var id = $('input[name="ho_file_info_edit_id"]');
+            var title = $('input[name="ho_file_info_edit_title"]');
+            var description = $('textarea[name="ho_file_info_edit_description"]');
             self.prnt.editmodal.modal();
-            $('#attachments-id').val(self.attach);
-            $('#attachments-title').val(self.name);
-            $('#attachments-description').val(self.description);
+            id.val(self.attach);
+            title.val(self.name);
+            description.val(self.description);
             $('#fileeditform_submit').bind('click', function() {
-                var id = $('#attachments-id').val();
-                var title = $('#attachments-title').val();
-                var description = $('#attachments-description').val();
                 $.ajax({
                     url: '/file/do/change-info',
                     type: 'POST',
                     dataType: 'json',
-                    data: 'id=' + id + '&title=' + title + '&description=' + description,
+                    data: 'id=' + id.val() + '&title=' + title.val() + '&description=' + description.val(),
                     success: function(data, textStatus, jqXHR) {
                         if (data.result == 'success') {
                             self.prnt.editmodal.modal('hide');

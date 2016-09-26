@@ -38,9 +38,19 @@ class Upload extends Widget
             $this->genOptions()
         );
 
+        $maxfilesize = $this->preset['rules']['maxSize']/(1000*1000).'Mb';
+
+        $limits = Yii::t('file', 'Allowed file extensions')
+            .': '
+            .$this->preset['rules']['extensions'];
+        $limits .= '<br>'.Yii::t('file', 'Maximum file size')
+            .': '
+            .$maxfilesize;
+
         echo Html::beginTag('div',['class' => 'ho_upload']);
         echo $this->render($this->preset['view'], [
             'filefield' => $filefield,
+            'limits' => $limits,
             'preset' => $this->preset
         ]);
         echo Html::tag(

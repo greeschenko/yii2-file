@@ -1,9 +1,15 @@
 .ho_upload_btn {
-    width: 100%;
     background: #107aa4;
     color: white;
     padding: 5px 15px;
     border-radius: 2px;
+    float: left;
+}
+
+.ho_upload_limits {
+    margin: 0 10px;
+    float: left;
+    font-size: 0.9em;
 }
 
 .ho_upload_btn:hover {
@@ -107,4 +113,12 @@
 .ho_upload_item_wrap:hover .icon {
     font-size: 4em;
     line-height: 2em;
+}
+
+.ho_img_upload {
+    background: #1eb4e4;
+}
+
+.ho_img_upload:hover {
+    background: #44c3ec;
 }
