@@ -33,7 +33,7 @@ class Attachments extends \yii\db\ActiveRecord
             [['group', 'file_id'], 'required'],
             [['file_id', 'is_main'], 'integer'],
             [['description'], 'string'],
-            [['group', 'title'], 'string', 'max' => 255],
+            [['group', 'title','bind'], 'string', 'max' => 255],
         ];
     }
 
