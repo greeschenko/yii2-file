@@ -7,4 +7,5 @@ return [
     'Description' => 'Опис',
     'Allowed file extensions' => 'Дозволені розширення файлів',
     'Maximum file size' => 'Максимальний розмір файлу',
+    'File Info' => 'Редагування',
 ];
