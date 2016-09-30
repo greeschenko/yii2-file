@@ -75,6 +75,7 @@ class UploadModel extends Model
                             ->save($this->path.$filename.'_'.$i.'_'.'.'.$ext,$one['quality']);
                     }
                     $type = Files::TYPE_IMG;
+                    @unlink($src);
                 } else {
                     $type = Files::TYPE_DOC;
                 }
@@ -107,8 +108,6 @@ class UploadModel extends Model
                         );
                     }
                 }
-
-                @unlink($src);
 
                 $res = $model->getData();
             }
