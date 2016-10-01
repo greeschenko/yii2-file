@@ -1,0 +1,136 @@
+.fg_item {
+    /*width: 20%;
+    float: left;*/
+    padding: 7px;
+    height: 150px;
+}
+
+.fg_item_content {
+    border: 1px solid rgba(150, 150, 150, 0.2);
+    box-shadow: 3px 3px 10px rgba(150, 150, 150, 0.4);
+    padding: 7px;
+    position: relative;
+    cursor: pointer;
+    height: 100%;
+}
+
+.fg_item_content .name {
+    font-size: 0.9em;
+    position: absolute;
+    top: 0.2em;
+    width: 85%;
+    z-index: 1;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.fg_item_content .size {
+    font-size: 0.9em;
+    position: absolute;
+    bottom: 0.2em;
+    width: 85%;
+    z-index: 1;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.fg_item_content .icon {
+    font-size: 3em;
+    text-align: center;
+    line-height: 3em;
+}
+
+.fg_item_content .img {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    height: 60%;
+    width: 60%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.fg_item_content:hover .img {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.fg_item_content:hover .icon {
+    font-size: 4em;
+    line-height: 2em;
+}
+
+.fg_blackwrap {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.89);
+    z-index: 500;
+}
+
+.fg_modal {
+    display: none;
+    position: fixed;
+    overflow-y: hidden;
+    top: 10%;
+    left: 10%;
+    height: 80%;
+    width: 80%;
+    background: white;
+    z-index: 1000;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.fg_modal_close {
+    color: tomato;
+    font-size: 2.5em;
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    cursor: pointer;
+}
+
+.fg_modal_close:hover {
+    color: red;
+}
+
+.fg_modal_download {
+    color: purple;
+    font-size: 2.5em;
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    cursor: pointer;
+}
+
+.fg_modal_download:hover {
+    color: indigo;
+}
+
+.fg_modal_title {
+    position: fixed;
+    padding: 5px 15px;
+    top: 2px;
+    left: 0px;
+    color: white;
+    font-weight: bold;
+}
+
+.fg_modal_description {
+    position: fixed;
+    padding: 5px 15px;
+    bottom: 2px;
+    left: 0px;
+    color: white;
+    font-weight: bold;
+}
