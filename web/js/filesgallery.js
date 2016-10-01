@@ -2,6 +2,7 @@ var FGitem = function(el, prnt) {
     this.el = el.find('.fg_item_content');
     this.type = this.el.data('type');
     this.src = this.el.data('src');
+    this.link = this.el.data('link');
     this.name = this.el.data('name');
     this.descripton = this.el.data('descripton');
     this.prnt = prnt;
@@ -12,8 +13,12 @@ FGitem.prototype = {
     init: function() {
         var self = this;
         self.el.bind('click', function() {
-            self.prnt.wrap.fadeIn();
             var src = self.src;
+            if (self.link == 1) {
+                window.open(src);
+                return false;
+            }
+            self.prnt.wrap.fadeIn();
             if (self.type == 'doc') {
                 if (src.substr(0, 4) != 'http') {
                     src = 'http://' + window.location.hostname + src;

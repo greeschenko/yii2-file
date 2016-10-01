@@ -85,6 +85,9 @@ class FilesGallery extends Widget
             $res .= Html::tag('div',$data['icon'],['class' => 'icon']);
             $opt['data-src'] = $data['url'];
             $opt['data-type'] = 'doc';
+            if ($data['type'] == 3) {
+                $opt['data-link'] = 1;
+            }
         } else {
             $tumb = (isset($data['tumb'])) ? $data['tumb'] : $data['big'];
             $res .= Html::tag('div','',[
