@@ -23,6 +23,7 @@ class Files extends \yii\db\ActiveRecord
 {
     const TYPE_IMG = 1;
     const TYPE_DOC = 2;
+    const TYPE_LINK = 3;
 
     public $module;
     public $iconlist = [
@@ -33,6 +34,9 @@ class Files extends \yii\db\ActiveRecord
         'pdf' => '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',
         'zip' => '<i class="fa fa-file-archive-o" aria-hidden="true"></i>',
         'rar' => '<i class="fa fa-file-archive-o" aria-hidden="true"></i>',
+    ];
+    public $linkiconlist = [
+        'dirrect' => '<i class="fa fa-external-link" aria-hidden="true"></i>',
     ];
 
     public function init()
@@ -108,6 +112,9 @@ class Files extends \yii\db\ActiveRecord
             foreach ($sizes as $i=>$one) {
                 $res[$i] = $this->path.$this->name.'_'.$i.'_'.'.'.$this->ext;
             }
+        } elseif ($this->type == self::TYPE_LINK) {
+            $res['url'] = $this->path;
+            $res['icon'] = $this->linkiconlist['dirrect'];
         } else {
             $res['url'] = $this->path.$this->name.'.'.$this->ext;
             $res['icon'] = $this->iconlist[$this->ext];

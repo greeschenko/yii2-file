@@ -33,8 +33,9 @@ HOUploadItem.prototype = {
                 self.prnt.viewmodal.find('.modal-header').html(head);
                 self.prnt.viewmodal.find('.modal-body').html(docview);
                 self.prnt.viewmodal.modal();
+            } else if (self.type == 3) {
+                window.open(self.url);
             }
-
 
             return false;
         });
@@ -82,11 +83,16 @@ HOUploadItem.prototype = {
         });
 
         self.reupload.bind('click', function() {
-            self.prnt.reu = self.attach;
-            self.prnt.filefield.trigger('click');
-            $('body').bind('click', function() {
-                self.prnt.reu = 0;
-            });
+            if (self.type == 3) {
+                self.prnt.linkmodal.modal();
+                self.prnt.el.find('input[name="ho_link_edit_id"]').val(self.attach);
+            } else {
+                self.prnt.reu = self.attach;
+                self.prnt.filefield.trigger('click');
+                $('body').bind('click', function() {
+                    self.prnt.reu = 0;
+                });
+            }
             return false;
         });
     },
@@ -102,18 +108,55 @@ var HOUpload = function(el) {
     this.el = el;
     this.reu = 0;
     this.filefield = el.find('input[type="file"]');
+    this.addlink = el.find('.ho_upload_link_btn');
     this.gcode = this.filefield.data('groupcode');
     this.res = el.find('.ho_upload_res');
     this.tmpl = el.find('.ho_upload_tmpl');
     this.errors = el.find('.ho_upload_errors');
     this.editmodal = el.find('.edit-modal');
     this.viewmodal = el.find('.view-modal');
+    this.linkmodal = el.find('.link-modal');
     this.init();
 };
 
 HOUpload.prototype = {
     init: function() {
         var self = this;
+
+        self.addlink.bind('click', function() {
+            self.linkmodal.modal();
+        });
+
+        self.el.find('.linkadd_submit').bind('click', function() {
+            var id = self.el.find('input[name="ho_link_edit_id"]');
+            var group = self.el.find('input[name="ho_link_edit_group"]');
+            var type = self.el.find('input[name="ho_link_edit_type"]');
+            var link = self.el.find('input[name="ho_link"]');
+            var u = /http(s?):\/\/[-\w\.]{3,}\.[A-Za-z]{2,3}/;
+            if (u.test(link.val())) {
+                link.parent().removeClass('has-error');
+                link.parent().find('.help-block').addClass('hidden');
+                $.ajax({
+                    url: '/file/upload/link',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: 'id=' + id.val() + '&group=' + group.val() + '&type=' + type.val() + '&link=' + link.val(),
+                    success: function(data, textStatus, jqXHR) {
+                        if (data.result == 'success') {
+                            self.linkmodal.modal('hide');
+                            link.val('');
+                            self.render();
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            } else {
+                link.parent().addClass('has-error');
+                link.parent().find('.help-block').removeClass('hidden');
+            }
+            return false;
+        });
 
         self.filefield.fileupload({
             'url': '/file/upload',

@@ -67,6 +67,16 @@ class Upload extends Widget
         Modal::end();
 
         Modal::begin([
+            'options' => [ 'class' => 'link-modal fade' ],
+            'header' => '<h2>'.Yii::t('file', 'Add link').'</h2>',
+        ]);
+        echo $this->render('addlink',[
+            'gcode' => $this->groupcode,
+            'type' => $this->type,
+        ]);
+        Modal::end();
+
+        Modal::begin([
             'options' => [ 'class' => 'view-modal fade' ],
             'size' => "modal-lg",
         ]);

@@ -8,4 +8,7 @@ return [
     'Allowed file extensions' => 'Дозволені розширення файлів',
     'Maximum file size' => 'Максимальний розмір файлу',
     'File Info' => 'Редагування',
+    'or' => 'або',
+    'Add link' => 'Додайте посилання',
+    'Incorrect url format' => 'Невірний формат посилання',
 ];

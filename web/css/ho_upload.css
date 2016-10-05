@@ -1,15 +1,44 @@
 .ho_upload_btn {
     background: #107aa4;
     color: white;
-    padding: 5px 15px;
-    border-radius: 2px;
+    padding: 7px 15px;
+    border-radius: 3px;
     float: left;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    margin-bottom: 5px;
+}
+
+.ho_upload_or {
+    background: #919799;
+    color: white;
+    padding: 7px 15px;
+    float: left;
+    margin-bottom: 5px;
+}
+
+.ho_upload_link_btn {
+    background: #1FCC2D;
+    color: white;
+    padding: 7px 15px;
+    border-radius: 3px;
+    float: left;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.ho_upload_link_btn:hover {
+    background: #5CCC65;
+    -webkit-transition: background 0.5s;
+    transition: background 0.5s;
 }
 
 .ho_upload_limits {
-    margin: 0 10px;
-    float: left;
     font-size: 0.9em;
+    margin-bottom: 5px;
+    color: grey;
 }
 
 .ho_upload_btn:hover {
