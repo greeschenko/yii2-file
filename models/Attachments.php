@@ -56,4 +56,18 @@ class Attachments extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Files::className(), ['id' => 'file_id']);
     }
+
+    /**
+     * return all attachment in select group
+     *
+     * @return void
+     */
+    public static function getGroupData($gcode)
+    {
+        $data = static::find()
+            ->where(['group' => $gcode])
+            ->all();
+
+        return $data;
+    }
 }
