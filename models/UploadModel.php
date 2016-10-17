@@ -27,7 +27,11 @@ class UploadModel extends Model
     {
         return [
             array_merge(
-                [ 'filedata', 'file', 'skipOnEmpty' => false, ],
+                [ 'filedata', 'file', 'skipOnEmpty' => false,
+                    'wrongExtension' => Yii::t('file', 'Wrong file extension'),
+                    'tooBig' => Yii::t('file', 'File too big'),
+                    'uploadRequired' => Yii::t('file', 'Error loading file, check that the file meets'),
+                ],
                 $this->module->presets[$this->preset]['rules']
             )
         ];

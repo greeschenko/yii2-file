@@ -113,6 +113,7 @@ var HOUpload = function(el) {
     this.res = el.find('.ho_upload_res');
     this.tmpl = el.find('.ho_upload_tmpl');
     this.errors = el.find('.ho_upload_errors');
+    this.fatalerrors = el.find('.ho_upload_fatalerrors');
     this.editmodal = el.find('.edit-modal');
     this.viewmodal = el.find('.view-modal');
     this.linkmodal = el.find('.link-modal');
@@ -161,6 +162,7 @@ HOUpload.prototype = {
         self.filefield.fileupload({
             'url': '/file/upload',
             'dataType': 'json',
+            'limitMultiFileUploadSize': 100,
         });
 
         self.filefield.on('fileuploaddone', function(e, data) {
@@ -172,6 +174,8 @@ HOUpload.prototype = {
                         self.errors.append('>>>> ' + data.result[key][i] + '<br>');
                     }
                 }
+                self.render();
+                return false;
             }
 
             var id = data.result.files.id;
@@ -190,10 +194,14 @@ HOUpload.prototype = {
         self.filefield.on('fileuploadfail', function(e, data) {
             console.log(e);
             console.log(data.jqXHR.responseText);
+            self.fatalerrors.show();
+            self.render();
         });
 
         self.filefield.on('fileuploadstart', function(e) {
             self.res.html('<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i>');
+            self.errors.html('');
+            self.fatalerrors.hide();
         });
 
         self.render();

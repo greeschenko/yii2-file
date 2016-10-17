@@ -58,6 +58,7 @@ class Upload extends Widget
             $this->render($this->preset['item_tmpl']),
             ['class' => 'hidden ho_upload_tmpl']);
         echo Html::tag('div','',['class' => 'ho_upload_errors']);
+        echo Html::tag('div',Yii::t('file', 'Error loading file, check that the file meets'),['class' => 'ho_upload_fatalerrors']);
 
         Modal::begin([
             'options' => [ 'class' => 'edit-modal fade' ],

@@ -11,4 +11,7 @@ return [
     'or' => 'або',
     'Add link' => 'Додайте посилання',
     'Incorrect url format' => 'Невірний формат посилання',
+    'Error loading file, check that the file meets' => 'Помилка завантаження файлу, перевірте чи файл відповідає вимогам',
+    'Wrong file extension' => 'Недопустимий тип файлу',
+    'File too big' => 'Недопустимий розмір файлу',
 ];

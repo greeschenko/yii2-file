@@ -52,6 +52,12 @@
     font-size: 0.9em;
 }
 
+.ho_upload_fatalerrors {
+    color: tomato;
+    font-size: 0.9em;
+    display: none;
+}
+
 .ho_upload_item {
     padding: 5px;
 }
