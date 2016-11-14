@@ -99,13 +99,12 @@ class FilesGallery extends Widget
         }
 
         if (isset($data['name'])) {
-            $ext = (isset($data['ext'])) ? '.'.$data['ext'] :'';
             $res .= Html::tag(
                 'div',
-                $data['name'].$ext,
+                $data['name'],
                 ['class'=>'name']
             );
-            $opt['data-name'] = $data['name'].$ext;
+            $opt['data-name'] = $data['name'];
         }
         if (isset($data['description'])) {
             /*$res .= Html::tag(
