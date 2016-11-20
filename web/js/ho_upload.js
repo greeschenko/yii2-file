@@ -18,8 +18,6 @@ HOUploadItem.prototype = {
     init: function() {
         var self = this;
         self.wrap.bind('click', function() {
-            console.log('view click');
-
             if (self.type == 1) {
                 var img = '<img src="' + self.img + '" alt="" style="max-width:100%;">';
                 var head = '<h2>' + self.name + '</h2><p>' + self.description + '</p>'
@@ -55,14 +53,17 @@ HOUploadItem.prototype = {
         });
 
         self.editbtn.bind('click', function() {
-            var id = $('input[name="ho_file_info_edit_id"]');
-            var title = $('input[name="ho_file_info_edit_title"]');
-            var description = $('textarea[name="ho_file_info_edit_description"]');
-            self.prnt.editmodal.modal();
+            var form = self.prnt.editmodal;
+            var id = form.find('input[name="ho_file_info_edit_id"]');
+            var title = form.find('input[name="ho_file_info_edit_title"]');
+            var description = form.find('textarea[name="ho_file_info_edit_description"]');
+            var submit = form.find('#fileeditform_submit');
+            form.modal();
             id.val(self.attach);
             title.val(self.name);
             description.val(self.description);
-            $('#fileeditform_submit').bind('click', function() {
+            submit.unbind('click');
+            submit.bind('click', function() {
                 $.ajax({
                     url: '/file/do/change-info',
                     type: 'POST',
@@ -70,7 +71,7 @@ HOUploadItem.prototype = {
                     data: 'id=' + id.val() + '&title=' + title.val() + '&description=' + description.val(),
                     success: function(data, textStatus, jqXHR) {
                         if (data.result == 'success') {
-                            self.prnt.editmodal.modal('hide');
+                            form.modal('hide');
                             self.prnt.render();
                         } else {
                             alert(data.msg);

@@ -38,6 +38,11 @@ FGitem.prototype = {
             self.prnt.modal_download.bind('click', function() {
                 window.open(src);
             });
+
+            self.el.find('.fg_download').bind('click', function(e) {
+                window.open(src);
+                return false;
+            });
         });
     },
 };

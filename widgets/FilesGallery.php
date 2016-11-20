@@ -106,6 +106,13 @@ class FilesGallery extends Widget
             );
             $opt['data-name'] = $data['name'];
         }
+
+        $res .= Html::tag(
+            'div',
+            '<i class="fa fa-download" aria-hidden="true"></i>',
+            ['class' => 'fg_download']
+        );
+
         if (isset($data['description'])) {
             /*$res .= Html::tag(
                 'div',
