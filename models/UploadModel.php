@@ -58,7 +58,7 @@ class UploadModel extends Model
                 $filename = trim($file->baseName);
                 $filename = $this->translite($filename);
                 $filename = strtolower($filename);
-                $filename = time().'_'.$filename;
+                /*$filename = time().'_'.$filename;*/
                 $src = $this->path . $filename . '.' . $ext;
 
                 $file->saveAs($src);
