@@ -87,8 +87,8 @@
 
 .ho_upload_item_wrap .edit {
     position: absolute;
-    bottom: 0em;
-    right: 0.2em;
+    top: 1em;
+    left: 0.2em;
     color: grey;
     font-size: 1.5em;
 }
