@@ -13,6 +13,7 @@ use yii\helpers\Html;
                 'ho_link',
                 '',
                 [
+                    'id' => 'input_link',
                     'class' => 'form-control',
                     'placeholder' => 'http://example.com'
                 ]
