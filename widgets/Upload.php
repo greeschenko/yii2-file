@@ -32,6 +32,7 @@ class Upload extends Widget
 
     public function run()
     {
+        $limits = '';
         $filefield = Html::activeFileInput(
             new $this->preset['model'],
             $this->preset['attribute'],
@@ -40,9 +41,12 @@ class Upload extends Widget
 
         $maxfilesize = $this->preset['rules']['maxSize']/(1000*1000).'Mb';
 
-        $limits = Yii::t('file', 'Allowed file extensions')
-            .': '
-            .$this->preset['rules']['extensions'];
+        if (isset($this->preset['rules']['extensions'])) {
+            $limits = Yii::t('file', 'Allowed file extensions')
+                .': '
+                .$this->preset['rules']['extensions'];
+        }
+
         $limits .= '<br>'.Yii::t('file', 'Maximum file size')
             .': '
             .$maxfilesize;
