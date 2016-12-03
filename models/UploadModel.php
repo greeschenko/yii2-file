@@ -57,7 +57,8 @@ class UploadModel extends Model
                 $ext = strtolower($file->extension);
                 $filename = trim($file->baseName);
                 $filename = $this->translite($filename);
-                $filename = strtolower($filename);
+                //TODO make name transform optonal
+                /*$filename = strtolower($filename);*/
                 /*$filename = time().'_'.$filename;*/
                 $src = $this->path . $filename . '.' . $ext;
 
