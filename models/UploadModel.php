@@ -40,7 +40,8 @@ class UploadModel extends Model
     public function upload($model=false)
     {
         $res = [];
-        $timedir = '/'.strtotime(date('d-m-Y',time())).'/';
+        /*$timedir = '/'.strtotime(date('d-m-Y',time())).'/';*/
+        $timedir = '/'.time().'/';
 
         if ( !is_dir($this->path) ) {
             mkdir($this->path);
