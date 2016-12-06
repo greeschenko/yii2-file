@@ -56,8 +56,8 @@ class UploadModel extends Model
             foreach ($this->filedata as $n=>$file) {
                 $ext = strtolower($file->extension);
                 $filename = trim($file->baseName);
-                $filename = $this->translite($filename);
                 //TODO make name transform optonal
+                /*$filename = $this->translite($filename);*/
                 /*$filename = strtolower($filename);*/
                 /*$filename = time().'_'.$filename;*/
                 $src = $this->path . $filename . '.' . $ext;
