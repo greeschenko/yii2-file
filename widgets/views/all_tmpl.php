@@ -14,6 +14,7 @@
         <div class="delete"><i class="fa fa-times" aria-hidden="true"></i></div>
         <div class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></div>
         <div class="reupload"><i class="fa fa-retweet" aria-hidden="true"></i></div>
+        <div class="download"><i class="fa fa fa-download" aria-hidden="true"></i></div>
     </div>
 </div>
 

@@ -11,6 +11,7 @@ var HOUploadItem = function(el, prnt) {
     this.deletebtn = el.find('.delete');
     this.editbtn = el.find('.edit');
     this.reupload = el.find('.reupload');
+    this.download = el.find('.download');
     this.init();
 };
 
@@ -94,6 +95,11 @@ HOUploadItem.prototype = {
                     self.prnt.reu = 0;
                 });
             }
+            return false;
+        });
+
+        self.download.bind('click', function() {
+            window.open(self.url);
             return false;
         });
     },
