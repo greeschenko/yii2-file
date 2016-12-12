@@ -47,7 +47,7 @@ class Upload extends Widget
                 .$this->preset['rules']['extensions'];
         }
 
-        $limits .= '<br>'.Yii::t('file', 'Maximum file size')
+        $limits .= Yii::t('file', 'Maximum file size')
             .': '
             .$maxfilesize;
 
