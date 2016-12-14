@@ -140,7 +140,7 @@ HOUpload.prototype = {
             var group = self.el.find('input[name="ho_link_edit_group"]');
             var type = self.el.find('input[name="ho_link_edit_type"]');
             var link = self.el.find('input[name="ho_link"]');
-            var u = /http(s?):\/\/[-\w\.]{3,}\.[A-Za-z]{2,3}/;
+            var u = /http(s?):\/\/[-\w\.]{2,}\.[A-Za-z]{2,3}/;
             if (u.test(link.val())) {
                 link.parent().removeClass('has-error');
                 link.parent().find('.help-block').addClass('hidden');
