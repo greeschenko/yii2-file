@@ -10,15 +10,6 @@ The preferred way to install this extension is through [composer](http://getcomp
 add
 
 ```
-    "repositories":[
-        ...
-        {
-            "type": "git",
-            "url": "https://github.com/greeschenko/yii2-file"
-        }
-        ...
-    ],
-    ...
     "require": {
         ...
         "greeschenko/yii2-file": "*"
