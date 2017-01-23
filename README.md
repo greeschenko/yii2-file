@@ -36,4 +36,5 @@ add to you app config
         'class'=>'greeschenko\file\Module',
     ],
 ],
+
 ```
