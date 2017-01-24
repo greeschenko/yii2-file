@@ -51,7 +51,7 @@ class UploadController extends Controller
             $data = Yii::$app->request->post();
 
             if ($data['id'] == '') {
-                $model->name = 'link';
+                $model->name = $data['link'];
                 $model->path = $data['link'];
                 $model->ext = 'link';
                 $model->preset = $data['type'];
