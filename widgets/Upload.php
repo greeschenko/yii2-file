@@ -17,6 +17,7 @@ class Upload extends Widget
     public $preset;
     public $module;
     public $options = [];
+    public $clientEvents = [];
 
     public function init()
     {
@@ -109,11 +110,19 @@ class Upload extends Widget
 
     public function registerClientScript()
     {
+        $js = [];
         $view = $this->getView();
 
         UploadAsset::register($view);
 
         $assetfile = $this->preset['assetsfile'];
         $assetfile::register($view);
+
+        if (!empty($this->clientEvents)) {
+            foreach ($this->clientEvents as $event => $handler) {
+                $js[] = "jQuery('#$this->id').on('$event', $handler);";
+            }
+        }
+        $view->registerJs(implode("\n", $js));
     }
 }
