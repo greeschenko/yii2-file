@@ -70,4 +70,13 @@ class Attachments extends \yii\db\ActiveRecord
 
         return $data;
     }
+
+    public static function getCountByCode($gcode)
+    {
+        $data = static::find()
+            ->where(['group' => $gcode])
+            ->count();
+
+        return $data;
+    }
 }
