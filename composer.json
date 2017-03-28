@@ -12,8 +12,8 @@
     ],
     "require": {
         "yiisoft/yii2": "*",
-        "2amigos/yii2-file-upload-widget": "~1.0",
-        "rmrevin/yii2-fontawesome": "~2.12",
+        "2amigos/yii2-file-upload-widget": "*",
+        "rmrevin/yii2-fontawesome": "*",
         "yurkinx/yii2-image": "dev-master"
     },
     "autoload": {
