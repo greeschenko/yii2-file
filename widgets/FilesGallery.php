@@ -75,7 +75,7 @@ class FilesGallery extends Widget
     {
         $res = '';
         $cl = 'fg_item_content';
-        if ($data['old']) {
+        if (isset($data['old']) and $data['old']) {
             $cl .= ' oldfile';
         }
         $opt = ['class' => $cl];
