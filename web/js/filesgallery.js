@@ -12,7 +12,7 @@ var FGitem = function(el, prnt) {
 FGitem.prototype = {
     init: function() {
         var self = this;
-        self.el.bind('click', function() {
+        self.el.find('.name, .icon, .img').bind('click', function() {
             var src = self.src;
             if (self.link == 1) {
                 window.open(src);
@@ -39,10 +39,11 @@ FGitem.prototype = {
                 window.open(src);
             });
 
-            self.el.find('.fg_download').bind('click', function(e) {
-                window.open(src);
-                return false;
-            });
+        });
+
+        self.el.find('.fg_direct_download').bind('click', function(e) {
+            window.open(self.src);
+            return false;
         });
     },
 };

@@ -2,6 +2,7 @@
 
 namespace greeschenko\file\widgets;
 
+use Yii;
 use yii\base\Widget;
 use yii\helpers\Html;
 use greeschenko\file\assets\FilesGalleryAsset;
@@ -11,12 +12,18 @@ class FilesGallery extends Widget
 {
     public $id;
     public $groupcode;
+    public $type = 'all'; //one, img
+    public $preset;
+    public $module;
     public $data;
     public $options = [];
 
     public function init()
     {
         parent::init();
+
+        $this->module = Yii::$app->getModule('file');
+        $this->preset = $this->module->presets[$this->type];
     }
 
     public function run()
@@ -83,7 +90,10 @@ class FilesGallery extends Widget
             $res .= Html::tag('div', $data['icon'], ['class' => 'icon']);
             $opt['data-src'] = $data['url'];
             $opt['data-type'] = 'doc';
-            if ($data['type'] == 3) {
+            if ($data['type'] == 3
+                or (isset($this->preset['no_doc_preview'])
+                    and $this->preset['no_doc_preview'])
+            ) {
                 $opt['data-link'] = 1;
             }
         } else {
