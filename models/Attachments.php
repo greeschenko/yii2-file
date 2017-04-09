@@ -7,25 +7,42 @@ use Yii;
 /**
  * This is the model class for table "attachments".
  *
- * @property integer $id
+ * @property int $id
  * @property string $group
- * @property integer $file_id
+ * @property int $file_id
  * @property string $title
  * @property string $description
- * @property integer $is_main
+ * @property int $is_main
  */
 class Attachments extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
         return 'attachments';
     }
 
+    public function beforeSave($insert)
+    {
+        $fdata = $this->file->getData();
+        $url = (isset($fdata['big']))
+                    ? $fdata['big']
+                    : $fdata['url'];
+        $url = realpath('.').$url;
+        if (is_file($url)) {
+            $md = 'md5:'.md5_file($url);
+            $this->hash = $md;
+        } else {
+            $this->hash = '';
+        }
+
+        return parent::beforeSave($insert);
+    }
+
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -33,12 +50,12 @@ class Attachments extends \yii\db\ActiveRecord
             [['group', 'file_id'], 'required'],
             [['file_id', 'is_main'], 'integer'],
             [['description'], 'string'],
-            [['group', 'title','bind'], 'string', 'max' => 255],
+            [['group', 'title', 'bind', 'hash'], 'string', 'max' => 255],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
@@ -58,9 +75,7 @@ class Attachments extends \yii\db\ActiveRecord
     }
 
     /**
-     * return all attachment in select group
-     *
-     * @return void
+     * return all attachment in select group.
      */
     public static function getGroupData($gcode)
     {

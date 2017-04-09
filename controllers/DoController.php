@@ -8,7 +8,6 @@ use greeschenko\file\models\Attachments;
 
 class DoController extends Controller
 {
-
     public function init()
     {
         parent::init();
@@ -16,14 +15,14 @@ class DoController extends Controller
         $this->module = Yii::$app->getModule('file');
     }
 
-    public function actionAttach($file_id,$gcode,$replace)
+    public function actionAttach($file_id, $gcode, $replace)
     {
         $res = [];
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
         if (Yii::$app->request->isGet and Yii::$app->request->isAjax) {
             if ($replace == 0) {
-                $model = new Attachments;
+                $model = new Attachments();
             } else {
                 $model = Attachments::findOne($replace);
             }
@@ -71,7 +70,7 @@ class DoController extends Controller
 
         if (Yii::$app->request->isGet and Yii::$app->request->isAjax) {
             $data = Attachments::find()->where(['group' => $gcode])->all();
-            foreach ($data as $i=>$one) {
+            foreach ($data as $i => $one) {
                 $res[$i] = $one->file->getData();
                 if ($one->title != '') {
                     $res[$i]['name'] = $one->title;
@@ -105,5 +104,31 @@ class DoController extends Controller
         }
 
         return $res;
+    }
+
+    /**
+     * fix hash data for all old files.
+     */
+    public function actionFixHash()
+    {
+        $data = Attachments::find()->all();
+        foreach ($data as $one) {
+            $md = '';
+            $fdata = $one->file->getData();
+            $url = (isset($fdata['big']))
+                        ? $fdata['big']
+                        : $fdata['url'];
+            $url = realpath('.').$url;
+            if (is_file($url)) {
+                $md = 'md5:'.md5_file($url);
+                $one->hash = $md;
+                if ($one->save()) {
+                    echo $one->id.'...OK';
+                } else {
+                    echo $one->id.'...FAIL';
+                }
+                echo '<br>';
+            }
+        }
     }
 }
