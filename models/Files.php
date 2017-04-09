@@ -8,16 +8,16 @@ use yii\behaviors\TimestampBehavior;
 /**
  * This is the model class for table "files".
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
  * @property string $path
  * @property string $ext
  * @property string $preset
- * @property integer $user_id
- * @property integer $created_at
- * @property integer $updated_at
- * @property integer $status
- * @property integer $type
+ * @property int $user_id
+ * @property int $created_at
+ * @property int $updated_at
+ * @property int $status
+ * @property int $type
  */
 class Files extends \yii\db\ActiveRecord
 {
@@ -47,7 +47,7 @@ class Files extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -55,7 +55,7 @@ class Files extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {
@@ -72,20 +72,20 @@ class Files extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['name','path','ext','preset'], 'required'],
+            [['name', 'path', 'ext', 'preset'], 'required'],
             [['user_id', 'created_at', 'updated_at', 'status', 'type'], 'integer'],
-            [['name', 'path','preset'], 'string', 'max' => 255],
+            [['name', 'path', 'preset'], 'string', 'max' => 255],
             [['ext'], 'string', 'max' => 10],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
@@ -109,7 +109,7 @@ class Files extends \yii\db\ActiveRecord
 
         if ($this->type == self::TYPE_IMG) {
             $sizes = $this->module->presets[$this->preset]['sizes'];
-            foreach ($sizes as $i=>$one) {
+            foreach ($sizes as $i => $one) {
                 $res[$i] = $this->path.$this->name.'_'.$i.'_'.'.'.$this->ext;
             }
         } elseif ($this->type == self::TYPE_LINK) {
@@ -120,7 +120,15 @@ class Files extends \yii\db\ActiveRecord
             $res['icon'] = $this->iconlist[$this->ext];
         }
 
-        return array_merge($this->attributes,$res);
+        if ($this->ext == 'link') {
+            $res['ext'] = '';
+            $res['size'] = '';
+        } else {
+            $res['ext'] = '.'.$this->ext;
+            $res['size'] = round($this->size / 1000000, 2).'Mb';
+        }
+
+        return array_merge($this->attributes, $res);
     }
 
     //TODO make all img remove $model->clearAll();

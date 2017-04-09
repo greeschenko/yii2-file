@@ -206,7 +206,7 @@ HOUpload.prototype = {
         });
 
         self.filefield.on('fileuploadstart', function(e) {
-            self.res.html('<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i>');
+            self.res.append('<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i>');
             self.errors.html('');
             self.fatalerrors.hide();
         });
@@ -221,8 +221,8 @@ HOUpload.prototype = {
             data: "gcode=" + self.gcode,
             dataType: "json",
             success: function(data, textStatus, xhr) {
-                /*console.log(data);
-                return false;*/
+                console.log(data);
+                /*return false;*/
 
                 var r = '';
                 for (var i in data) {

@@ -8,7 +8,7 @@ class FilesGalleryAsset extends AssetBundle
 {
     public $sourcePath = '@greeschenko/file/web';
     public $css = [
-        'css/filesgallery.css'
+        'css/filesgallery.css',
     ];
     public $js = [
         'js/filesgallery.js',

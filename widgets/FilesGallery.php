@@ -21,7 +21,7 @@ class FilesGallery extends Widget
 
     public function run()
     {
-        echo Html::beginTag('div',['class' => 'fg_wrap']);
+        echo Html::beginTag('div', ['class' => 'fg_wrap']);
         if ($this->groupcode != '') {
             $this->renderGroup();
         } else {
@@ -29,22 +29,20 @@ class FilesGallery extends Widget
         }
         echo Html::tag(
             'div',
-            Html::tag('div','',['class' => 'fg_modal_title'])
-            .Html::tag('div','',['class' => 'fg_modal_description'])
-            .Html::tag('div','',['class' => 'fg_modal_content'])
-            .Html::tag('div','<i class="fa fa-download" aria-hidden="true"></i>',['class' => 'fg_modal_download'])
-            .Html::tag('div','<i class="fa fa-times-circle" aria-hidden="true"></i>',['class' => 'fg_modal_close']),
+            Html::tag('div', '', ['class' => 'fg_modal_title'])
+            .Html::tag('div', '', ['class' => 'fg_modal_description'])
+            .Html::tag('div', '', ['class' => 'fg_modal_content'])
+            .Html::tag('div', '<i class="fa fa-download" aria-hidden="true"></i>', ['class' => 'fg_modal_download'])
+            .Html::tag('div', '<i class="fa fa-times-circle" aria-hidden="true"></i>', ['class' => 'fg_modal_close']),
             ['class' => 'fg_modal']);
-        echo Html::tag( 'div', '', ['class' => 'fg_blackwrap']);
+        echo Html::tag('div', '', ['class' => 'fg_blackwrap']);
         echo Html::endTag('div');
-        echo Html::tag('div','',['class' => 'clearfix']);
+        echo Html::tag('div', '', ['class' => 'clearfix']);
         $this->registerClientScript();
     }
 
     /**
-     * render files from group
-     *
-     * @return void
+     * render files from group.
      */
     public function renderGroup()
     {
@@ -59,9 +57,7 @@ class FilesGallery extends Widget
     }
 
     /**
-     * render files from data
-     *
-     * @return void
+     * render files from data.
      */
     public function renderData()
     {
@@ -73,16 +69,18 @@ class FilesGallery extends Widget
     }
 
     /**
-     * render one file
-     *
-     * @return void
+     * render one file.
      */
     public function renderOne($data)
     {
         $res = '';
-        $opt = ['class' => 'fg_item_content'];
+        $cl = 'fg_item_content';
+        if ($data['old']) {
+            $cl .= ' oldfile';
+        }
+        $opt = ['class' => $cl];
         if (isset($data['icon'])) {
-            $res .= Html::tag('div',$data['icon'],['class' => 'icon']);
+            $res .= Html::tag('div', $data['icon'], ['class' => 'icon']);
             $opt['data-src'] = $data['url'];
             $opt['data-type'] = 'doc';
             if ($data['type'] == 3) {
@@ -90,9 +88,9 @@ class FilesGallery extends Widget
             }
         } else {
             $tumb = (isset($data['tumb'])) ? $data['tumb'] : $data['big'];
-            $res .= Html::tag('div','',[
+            $res .= Html::tag('div', '', [
                 'class' => 'img',
-                'style'=>'background-image:url("'.$tumb.'");',
+                'style' => 'background-image:url("'.$tumb.'");',
             ]);
             $opt['data-src'] = $data['big'];
             $opt['data-type'] = 'img';
@@ -102,7 +100,7 @@ class FilesGallery extends Widget
             $res .= Html::tag(
                 'div',
                 $data['name'],
-                ['class'=>'name']
+                ['class' => 'name']
             );
             $opt['data-name'] = $data['name'];
         }
@@ -110,7 +108,7 @@ class FilesGallery extends Widget
         $res .= Html::tag(
             'div',
             '<i class="fa fa-download" aria-hidden="true"></i>',
-            ['class' => 'fg_download']
+            ['class' => 'fg_direct_download']
         );
 
         if (isset($data['description'])) {
@@ -124,14 +122,14 @@ class FilesGallery extends Widget
         if (isset($data['size'])) {
             $res .= Html::tag(
                 'div',
-                round(($data['size']/1000000),2).'Mb',
-                ['class'=>'size']
+                round(($data['size'] / 1000000), 2).'Mb',
+                ['class' => 'size']
             );
         }
         echo Html::tag(
             'div',
-            Html::tag('div',$res,$opt),
-            ['class' => 'fg_item col-md-3 col-lg-2 col-sm-4']);
+            Html::tag('div', $res, $opt),
+            ['class' => 'fg_item']);
     }
 
     public function registerClientScript()

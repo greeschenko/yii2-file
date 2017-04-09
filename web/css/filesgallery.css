@@ -1,68 +1,62 @@
 .fg_item {
     /*width: 20%;
     float: left;*/
-    padding: 7px;
-    height: 150px;
+    margin: 10px 0;
+    margin-left: 10px;
 }
 
 .fg_item_content {
-    border: 1px solid rgba(150, 150, 150, 0.2);
-    box-shadow: 3px 3px 10px rgba(150, 150, 150, 0.4);
-    padding: 7px;
-    position: relative;
+    display: flex;
+    height: 3em;
+    align-content: center;
+    justify-content: center;
+    border: 1px solid rgba(68, 138, 255, 0.41);
     cursor: pointer;
-    height: 100%;
+    border-radius: 4px;
+    transition: all 0.5s ease-in-out 0.2s;
 }
 
-.fg_item_content .name {
-    font-size: 0.9em;
-    position: absolute;
-    top: 0.2em;
-    width: 85%;
-    z-index: 1;
-    white-space: nowrap;
-    overflow: hidden;
-}
 
-.fg_item_content .size {
-    font-size: 0.9em;
-    position: absolute;
-    bottom: 0.2em;
-    width: 85%;
-    z-index: 1;
-    white-space: nowrap;
-    overflow: hidden;
+.fg_item_content:hover {
+    border: 1px solid #448aff;
+    background: rgba(68, 138, 255, 0.15);
 }
 
 .fg_item_content .icon {
-    font-size: 3em;
+    width: 3em;
+    line-height: 2em;
     text-align: center;
-    line-height: 3em;
+    font-size: 1.5em;
+    border-right: 1px solid rgba(68, 138, 255, 0.41);
 }
 
 .fg_item_content .img {
-    position: absolute;
-    top: 20%;
-    left: 20%;
-    height: 60%;
-    width: 60%;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
+    width: 5em;
+    background-position: center top;
+    border-right: 1px solid rgba(68, 138, 255, 0.41);
+    background-size: cover;
 }
 
-.fg_item_content:hover .img {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    -webkit-transition: all 0.5s;
-    transition: all 0.5s;
+.fg_item_content .name {
+    flex: 2 100%;
+    padding: 0 0 0 1em;
+    line-height: 3em;
 }
 
-.fg_item_content:hover .icon {
-    font-size: 4em;
-    line-height: 2em;
+.fg_item_content .fg_direct_download {
+    width: 4em;
+    line-height: 3em;
+    text-align: center;
+    font-size: 1em;
+    cursor: pointer;
+    border-left: 1px solid rgba(68, 138, 255, 0.41);
+    transition: all 0.3s ease-out 0.1s;
+    color: #3f51b5;
+}
+
+.fg_item_content .fg_direct_download:hover {
+    background: #3f51b5;
+    color: white;
 }
 
 .fg_blackwrap {
@@ -160,4 +154,19 @@
     left: 0px;
     color: white;
     font-weight: bold;
+}
+
+
+.fg_item_content.oldfile {
+    font-size: 0.8em;
+    margin-left: 3em;
+}
+
+.fg_item_content.oldfile {
+    border: 1px solid rgba(150, 150, 150, 0.41);
+    opacity: 0.6;
+}
+
+.fg_item_content.oldfile .name {
+    text-decoration: line-through;
 }
