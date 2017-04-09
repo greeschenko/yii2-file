@@ -41,6 +41,8 @@
     flex: 2 100%;
     padding: 0 0 0 1em;
     line-height: 3em;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .fg_item_content .fg_direct_download {
