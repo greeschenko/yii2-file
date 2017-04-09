@@ -45,6 +45,10 @@
     overflow: hidden;
 }
 
+.fg_item_content .size {
+    display: none;
+}
+
 .fg_item_content .fg_direct_download {
     width: 4em;
     line-height: 3em;
