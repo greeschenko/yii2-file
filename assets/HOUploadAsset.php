@@ -8,7 +8,7 @@ class HOUploadAsset extends AssetBundle
 {
     public $sourcePath = '@greeschenko/file/web';
     public $css = [
-        'css/ho_upload.css'
+        'css/ho_upload.css',
     ];
     public $js = [
         'js/ho_upload.js',
@@ -17,6 +17,6 @@ class HOUploadAsset extends AssetBundle
     public $depends = [
         'yii\web\JqueryAsset',
         'yii\bootstrap\BootstrapAsset',
-        '\rmrevin\yii\fontawesome\AssetBundle',
+        'greeschenko\file\assets\FontsAsset',
     ];
 }

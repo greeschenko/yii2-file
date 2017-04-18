@@ -13,7 +13,7 @@
     "require": {
         "yiisoft/yii2": "*",
         "2amigos/yii2-file-upload-widget": "*",
-        "rmrevin/yii2-fontawesome": "*",
+        "fortawesome/font-awesome": "~4.7",
         "yurkinx/yii2-image": "dev-master"
     },
     "autoload": {
