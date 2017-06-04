@@ -52,11 +52,16 @@ class DoController extends Controller
         if (Yii::$app->request->isPost and Yii::$app->request->isAjax) {
             $data = Yii::$app->request->post();
             $model = Attachments::findOne($data['id']);
-            if ($model->delete()) {
-                $res['result'] = 'success';
+            if ($model != null) {
+                if ($model->delete()) {
+                    $res['result'] = 'success';
+                } else {
+                    $res['result'] = 'error';
+                    $res['msg'] = $model->errors;
+                }
             } else {
                 $res['result'] = 'error';
-                $res['msg'] = $model->errors;
+                $res['msg'] = 'model not found';
             }
         }
 
