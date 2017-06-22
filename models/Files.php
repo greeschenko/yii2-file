@@ -34,6 +34,7 @@ class Files extends \yii\db\ActiveRecord
         'pdf' => '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',
         'zip' => '<i class="fa fa-file-archive-o" aria-hidden="true"></i>',
         'rar' => '<i class="fa fa-file-archive-o" aria-hidden="true"></i>',
+        'file' => '<i class="fa fa-file-o" aria-hidden="true"></i>',
     ];
     public $linkiconlist = [
         'dirrect' => '<i class="fa fa-external-link" aria-hidden="true"></i>',
@@ -117,7 +118,11 @@ class Files extends \yii\db\ActiveRecord
             $res['icon'] = $this->linkiconlist['dirrect'];
         } else {
             $res['url'] = $this->path.$this->name.'.'.$this->ext;
-            $res['icon'] = $this->iconlist[$this->ext];
+            if (isset($this->iconlist[$this->ext])) {
+                $res['icon'] = $this->iconlist[$this->ext];
+            } else {
+                $res['icon'] = $this->iconlist['file'];
+            }
         }
 
         if ($this->ext == 'link') {
