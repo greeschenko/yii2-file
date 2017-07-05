@@ -1,4 +1,5 @@
 <?php
+
 namespace greeschenko\file\models;
 
 use Yii;
@@ -27,46 +28,46 @@ class UploadModel extends Model
     {
         return [
             array_merge(
-                [ 'filedata', 'file', 'skipOnEmpty' => false,
+                ['filedata', 'file', 'skipOnEmpty' => false,
                     'wrongExtension' => Yii::t('file', 'Wrong file extension'),
                     'tooBig' => Yii::t('file', 'File too big'),
                     'uploadRequired' => Yii::t('file', 'Error loading file, check that the file meets'),
                 ],
                 $this->module->presets[$this->preset]['rules']
-            )
+            ),
         ];
     }
 
-    public function upload($model=false)
+    public function upload($model = false)
     {
         $res = [];
         /*$timedir = '/'.strtotime(date('d-m-Y',time())).'/';*/
         $timedir = '/'.time().'/';
 
-        if ( !is_dir($this->path) ) {
+        if (!is_dir($this->path)) {
             mkdir($this->path);
         }
 
-        if ( !is_dir($this->path.$timedir) ) {
+        if (!is_dir($this->path.$timedir)) {
             mkdir($this->path.$timedir);
         }
 
         $this->path = $this->path.$timedir;
 
         if ($this->validate()) {
-            foreach ($this->filedata as $n=>$file) {
+            foreach ($this->filedata as $n => $file) {
                 $ext = strtolower($file->extension);
                 $filename = trim($file->baseName);
                 //TODO make name transform optonal
                 /*$filename = $this->translite($filename);*/
                 /*$filename = strtolower($filename);*/
                 /*$filename = time().'_'.$filename;*/
-                $src = $this->path . $filename . '.' . $ext;
+                $src = $this->path.$filename.'.'.$ext;
 
                 $file->saveAs($src);
                 //image lib info https://github.com/yurkinx/yii2-image
 
-                if ( in_array($ext,[ 'png', 'jpg', 'jpeg', 'gif',
+                if (in_array($ext, ['png', 'jpg', 'jpeg', 'gif',
                     'tiff', 'PNG', 'JPG', 'JPEG', 'GIF', 'TIFF', ])
                 ) {
                     $img = getimagesize($src);
@@ -74,12 +75,18 @@ class UploadModel extends Model
                     $h = $img[1];
                     $sizes = $this->module->presets[$this->preset]['sizes'];
 
-                    foreach ($sizes as $i=>$one) {
-                        $this->module->image
-                            ->load($src)
-                            ->resize($one['width'], $one['height'],
-                                constant('\yii\image\drivers\Image::'.$one['mode']))
-                            ->save($this->path.$filename.'_'.$i.'_'.'.'.$ext,$one['quality']);
+                    foreach ($sizes as $i => $one) {
+                        if ($one['width'] == 0 and $one['height'] == 0) {
+                            $this->module->image
+                                ->load($src)
+                                ->save($this->path.$filename.'_'.$i.'_'.'.'.$ext, $one['quality']);
+                        } else {
+                            $this->module->image
+                                ->load($src)
+                                ->resize($one['width'], $one['height'],
+                                    constant('\yii\image\drivers\Image::'.$one['mode']))
+                                ->save($this->path.$filename.'_'.$i.'_'.'.'.$ext, $one['quality']);
+                        }
                     }
                     $type = Files::TYPE_IMG;
                     @unlink($src);
@@ -95,9 +102,9 @@ class UploadModel extends Model
                     $model->size = $file->size;
                     $model->preset = $this->preset;
                     $model->type = $type;
-                    if ( !$model->save() ) {
+                    if (!$model->save()) {
                         throw new \yii\web\HttpException(
-                            501 ,
+                            501,
                             json_encode($model->errors)
                         );
                     }
@@ -108,9 +115,9 @@ class UploadModel extends Model
                     $model->ext = $ext;
                     $model->size = $file->size;
                     $model->type = $type;
-                    if ( !$model->save() ) {
+                    if (!$model->save()) {
                         throw new \yii\web\HttpException(
-                            501 ,
+                            501,
                             json_encode($model->errors)
                         );
                     }
@@ -119,7 +126,7 @@ class UploadModel extends Model
                 $res = $model->getData();
             }
 
-            $files = ['files'=>$res];
+            $files = ['files' => $res];
 
             return $files;
         } else {
@@ -129,22 +136,22 @@ class UploadModel extends Model
 
     public function translite($str)
     {
-        $cyr  = array('а','б','в','г','д','e','ё','ж','з','и','й',
-            'к','л','м','н','о','п','р','с','т','у',
-            'ф','х','ц','ч','ш','щ','ъ', 'ы','ь', 'э',
-            'ю','я','А','Б','В','Г','Д','Е','Ж','З','И',
-            'Й','К','Л','М','Н','О','П','Р','С','Т','У',
-            'Ф','Х','Ц','Ч','Ш','Щ','Ъ', 'Ы','Ь', 'Э', 'Ю','Я' );
+        $cyr = array('а', 'б', 'в', 'г', 'д', 'e', 'ё', 'ж', 'з', 'и', 'й',
+            'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у',
+            'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э',
+            'ю', 'я', 'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И',
+            'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У',
+            'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я', );
 
-        $lat = array( 'a','b','v','g','d','e','io','zh','z','i',
-        'y','k','l','m','n','o','p','r','s','t','u',
-        'f' ,'h' ,'ts' ,'ch','sh' ,'sht' ,'a', 'i', 'y',
-        'e' ,'yu' ,'ya','A','B','V','G','D','E','Zh',
-        'Z','I','Y','K','L','M','N','O','P','R','S','T','U',
-        'F' ,'H' ,'Ts' ,'Ch','Sh' ,'Sht' ,'A' ,'Y' ,'Yu' ,'Ya' );
+        $lat = array('a', 'b', 'v', 'g', 'd', 'e', 'io', 'zh', 'z', 'i',
+        'y', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u',
+        'f', 'h', 'ts', 'ch', 'sh', 'sht', 'a', 'i', 'y',
+        'e', 'yu', 'ya', 'A', 'B', 'V', 'G', 'D', 'E', 'Zh',
+        'Z', 'I', 'Y', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U',
+        'F', 'H', 'Ts', 'Ch', 'Sh', 'Sht', 'A', 'Y', 'Yu', 'Ya', );
 
         $res = str_replace($cyr, $lat, $str);
-        $res = str_replace(" ", "_", $res);
+        $res = str_replace(' ', '_', $res);
 
         return $res;
     }
