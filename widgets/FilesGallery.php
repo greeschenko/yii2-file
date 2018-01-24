@@ -97,6 +97,10 @@ class FilesGallery extends Widget
                 $opt['data-link'] = 1;
             }
         } else {
+            //if (!isset($data['tumb']) and !isset($data['big'])) {
+                //print_r($this->data);
+                //die;
+            //}
             $tumb = (isset($data['tumb'])) ? $data['tumb'] : $data['big'];
             $res .= Html::tag('div', '', [
                 'class' => 'img',

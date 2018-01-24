@@ -48,7 +48,7 @@ class Attachments extends \yii\db\ActiveRecord
     {
         return [
             [['group', 'file_id'], 'required'],
-            [['file_id', 'is_main'], 'integer'],
+            [['file_id', 'is_main', 'index'], 'integer'],
             [['description'], 'string'],
             [['group', 'title', 'bind', 'hash'], 'string', 'max' => 255],
         ];
@@ -81,6 +81,7 @@ class Attachments extends \yii\db\ActiveRecord
     {
         $data = static::find()
             ->where(['group' => $gcode])
+            ->orderBy('index')
             ->all();
 
         return $data;

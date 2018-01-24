@@ -108,6 +108,8 @@
 .ho_upload_item_wrap .download,
 .ho_upload_item_wrap .edit,
 .ho_upload_item_wrap .reupload,
+.ho_upload_item_wrap .up,
+.ho_upload_item_wrap .down,
 .ho_upload_item_wrap .delete {
     width: 4em;
     line-height: 3em;
@@ -130,6 +132,11 @@
     color: #ffc107;
 }
 
+.ho_upload_item_wrap .up,
+.ho_upload_item_wrap .down {
+    color: grey;
+}
+
 .ho_upload_item_wrap .delete {
     color: tomato;
 }
@@ -147,6 +154,12 @@
 
 .ho_upload_item_wrap .reupload:hover {
     background: #ffc107;
+    color: white;
+}
+
+.ho_upload_item_wrap .up:hover,
+.ho_upload_item_wrap .down:hover {
+    background: grey;
     color: white;
 }
 

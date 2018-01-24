@@ -136,4 +136,26 @@ class DoController extends Controller
             }
         }
     }
+
+    public function actionSyncOrder($list)
+    {
+        $res = [];
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        if (Yii::$app->request->isAjax) {
+            foreach (json_decode($list) as $key => $value) {
+                $model = Attachments::findOne($value);
+                $model->index = $key;
+                if ($model->save()) {
+                    $res['result'] = 'success';
+                } else {
+                    $res['result'] = 'error';
+                    $res['msg'] = $model->errors;
+                    break;
+                }
+            }
+        }
+
+        return $res;
+    }
 }
