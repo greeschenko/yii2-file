@@ -29,6 +29,7 @@ class DoController extends Controller
             if ($model != null) {
                 $model->group = $gcode;
                 $model->file_id = $file_id;
+                $model->index = Attachments::find()->where(['group' => $gcode])->count();
                 if ($model->save()) {
                     $res['result'] = 'success';
                 } else {
@@ -74,7 +75,10 @@ class DoController extends Controller
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
         if (Yii::$app->request->isGet and Yii::$app->request->isAjax) {
-            $data = Attachments::find()->where(['group' => $gcode])->all();
+            $data = Attachments::find()
+                ->where(['group' => $gcode])
+                ->orderBy('index')
+                ->all();
             foreach ($data as $i => $one) {
                 $res[$i] = $one->file->getData();
                 if ($one->title != '') {
@@ -145,13 +149,15 @@ class DoController extends Controller
         if (Yii::$app->request->isAjax) {
             foreach (json_decode($list) as $key => $value) {
                 $model = Attachments::findOne($value);
-                $model->index = $key;
-                if ($model->save()) {
-                    $res['result'] = 'success';
-                } else {
-                    $res['result'] = 'error';
-                    $res['msg'] = $model->errors;
-                    break;
+                if ($model != null) {
+                    $model->index = $key;
+                    if ($model->save()) {
+                        $res['result'] = 'success';
+                    } else {
+                        $res['result'] = 'error';
+                        $res['msg'] = $model->errors;
+                        break;
+                    }
                 }
             }
         }

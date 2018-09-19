@@ -258,6 +258,7 @@ HOUpload.prototype = {
         self.render();
     },
     render: function() {
+        var list = [];
         var self = this;
         $.ajax({
             method: "GET",
@@ -275,6 +276,22 @@ HOUpload.prototype = {
                 self.res.html(r);
                 self.el.find('.ho_upload_item').each(function() {
                     new HOUploadItem($(this), self);
+                    list.push($(this).data('attach'));
+                });
+
+                $.ajax({
+                    url: '/file/do/sync-order',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: 'list=' + JSON.stringify(list),
+                    success: function(data, textStatus, jqXHR) {
+                        console.log(data);
+                        //if (data.result == 'success') {
+                        //console.log('order saved');
+                        //} else {
+                        //alert(data.msg);
+                        //}
+                    },
                 });
             },
         });
