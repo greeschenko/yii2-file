@@ -176,3 +176,8 @@
 .fg_item_content.oldfile .name {
     text-decoration: line-through;
 }
+
+span.description {
+    font-size: 0.9em;
+    color: #737373;
+}

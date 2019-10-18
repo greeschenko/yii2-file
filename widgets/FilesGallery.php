@@ -111,12 +111,24 @@ class FilesGallery extends Widget
         }
 
         if (isset($data['name'])) {
+            $name = $data['name'];
+            if (isset($data['description']) and $data['description'] != '') {
+                $name .= Html::tag(
+                    'span',
+                    ' ('.$data['description'].')',
+                    ['class'=>'description']
+                );
+            }
             $res .= Html::tag(
                 'div',
-                $data['name'],
+                $name,
                 ['class' => 'name']
             );
             $opt['data-name'] = $data['name'];
+        }
+
+        if (isset($data['description'])) {
+            $opt['data-description'] = $data['description'];
         }
 
         $res .= Html::tag(
@@ -125,14 +137,6 @@ class FilesGallery extends Widget
             ['class' => 'fg_direct_download']
         );
 
-        if (isset($data['description'])) {
-            /*$res .= Html::tag(
-                'div',
-                $data['description'],
-                ['class'=>'description']
-            );*/
-            $opt['data-description'] = $data['description'];
-        }
         if (isset($data['size'])) {
             $res .= Html::tag(
                 'div',
