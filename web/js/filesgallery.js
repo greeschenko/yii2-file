@@ -45,6 +45,11 @@ FGitem.prototype = {
             window.open(self.src);
             return false;
         });
+
+        self.el.find('.fg_description').bind('click', function(e) {
+            self.el.find('.fg_info').fadeToggle();
+            return false;
+        });
     },
 };
 

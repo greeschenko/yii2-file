@@ -65,6 +65,33 @@
     color: white;
 }
 
+.fg_item_content .fg_description {
+    width: 4em;
+    line-height: 3em;
+    text-align: center;
+    font-size: 1em;
+    cursor: pointer;
+    border-left: 1px solid rgba(68, 138, 255, 0.41);
+    transition: all 0.3s ease-out 0.1s;
+    color: #3f51b5;
+}
+
+.fg_item_content .fg_description:hover {
+    background: #3f51b5;
+    color: white;
+}
+
+.fg_item_content .fg_info {
+    position: absolute;
+    margin-top: 3.2em;
+    width: 100%;
+    background: white;
+    padding: 1em;
+    box-shadow: 1px 1px 5px grey;
+    display: none;
+    z-index: 1000;
+}
+
 .fg_blackwrap {
     display: none;
     position: fixed;

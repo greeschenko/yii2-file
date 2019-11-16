@@ -133,6 +133,12 @@ class FilesGallery extends Widget
 
         $res .= Html::tag(
             'div',
+            '<i class="fa fa-info" aria-hidden="true"></i>',
+            ['class' => 'fg_description']
+        );
+
+        $res .= Html::tag(
+            'div',
             '<i class="fa fa-download" aria-hidden="true"></i>',
             ['class' => 'fg_direct_download']
         );
@@ -144,6 +150,14 @@ class FilesGallery extends Widget
                 ['class' => 'size']
             );
         }
+
+        $res .= Html::tag(
+            'div',
+            '<p class="">'.$data['name'].'</p>'."</br>"
+            .$data['description'],
+            ['class' => 'fg_info']
+        );
+
         echo Html::tag(
             'div',
             Html::tag('div', $res, $opt),
