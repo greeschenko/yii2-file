@@ -11,7 +11,7 @@ class FilesGalleryAsset extends AssetBundle
         'css/filesgallery.css?v=0.0.1',
     ];
     public $js = [
-        'js/filesgallery.js?v=0.0.2',
+        'js/filesgallery.js?v=0.0.3',
     ];
     public $depends = [
         'yii\web\JqueryAsset',

@@ -154,7 +154,7 @@ class FilesGallery extends Widget
         $res .= Html::tag(
             'div',
             '<p class="">'.$data['name'].'</p>'."</br>"
-            .$data['description'],
+            .(isset($data['description'])) ? $data['description'] : '',
             ['class' => 'fg_info']
         );
 
