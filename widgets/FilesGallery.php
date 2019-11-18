@@ -134,13 +134,27 @@ class FilesGallery extends Widget
         $res .= Html::tag(
             'div',
             '<i class="fa fa-info" aria-hidden="true"></i>',
-            ['class' => 'fg_description']
+            [
+                'class' => 'fg_description',
+                'onclick' => "
+                    var el = $(this).parent();
+                    el.find('.fg_info').fadeToggle();
+                    return false;
+                ",
+            ]
         );
 
         $res .= Html::tag(
             'div',
             '<i class="fa fa-download" aria-hidden="true"></i>',
-            ['class' => 'fg_direct_download']
+            [
+                'class' => 'fg_direct_download',
+                'onclick' => "
+                    var el = $(this).parent();
+                    window.open(el.data('src'));
+                    return false;
+                ",
+            ]
         );
 
         if (isset($data['size'])) {
@@ -151,10 +165,17 @@ class FilesGallery extends Widget
             );
         }
 
+        $txt = "";
+        if (isset($data['name']) and $data['name'] != '') {
+            $txt .= $data['name']."</br>";
+        }
+        if (isset($data['description']) and $data['description'] != '') {
+            $txt .= $data['description'];
+        }
+
         $res .= Html::tag(
             'div',
-            '<p class="">'.$data['name'].'</p>'."</br>",
-            //.(isset($data['description'])) ? $data['description'] : '',
+            $txt,
             ['class' => 'fg_info']
         );
 

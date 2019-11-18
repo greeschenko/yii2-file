@@ -41,15 +41,15 @@ FGitem.prototype = {
 
         });
 
-        self.el.find('.fg_direct_download').bind('click', function(e) {
-            window.open(self.src);
-            return false;
-        });
+        //self.el.find('.fg_direct_download').bind('click', function(e) {
+        //window.open(self.src);
+        //return false;
+        //});
 
-        self.el.find('.fg_description').bind('click', function(e) {
-            self.el.find('.fg_info').fadeToggle();
-            return false;
-        });
+        //self.el.find('.fg_description').bind('click', function(e) {
+        //self.el.find('.fg_info').fadeToggle();
+        //return false;
+        //});
     },
 };
 
