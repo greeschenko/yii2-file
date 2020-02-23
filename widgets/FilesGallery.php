@@ -78,7 +78,7 @@ class FilesGallery extends Widget
     /**
      * render one file.
      */
-    public function renderOne($data, $hash, $bind)
+    public function renderOne($data, $hash='', $bind='')
     {
         $res = '';
         $cl = 'fg_item_content';
