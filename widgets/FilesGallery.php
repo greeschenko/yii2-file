@@ -58,7 +58,7 @@ class FilesGallery extends Widget
             ->all();
         if (count($data) > 0) {
             foreach ($data as $one) {
-                echo $this->renderOne($one->file->getData());
+                echo $this->renderOne($one->file->getData(), $one->hash, $one->bind);
             }
         }
     }
@@ -78,7 +78,7 @@ class FilesGallery extends Widget
     /**
      * render one file.
      */
-    public function renderOne($data)
+    public function renderOne($data, $hash, $bind)
     {
         $res = '';
         $cl = 'fg_item_content';
@@ -143,6 +143,9 @@ class FilesGallery extends Widget
                 ",
             ]
         );
+
+        $opt['data-hash'] = $hash;
+        $opt['data-bind'] = $bind;
 
         $res .= Html::tag(
             'div',
