@@ -163,7 +163,7 @@ class FilesGallery extends Widget
         if (isset($data['size'])) {
             $res .= Html::tag(
                 'div',
-                round(($data['size'] / 1000000), 2).'Mb',
+                round(((int)$data['size'] / 1000000), 2).'Mb',
                 ['class' => 'size']
             );
         }
