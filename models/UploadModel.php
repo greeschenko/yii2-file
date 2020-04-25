@@ -45,11 +45,11 @@ class UploadModel extends Model
         $timedir = '/'.time().'/';
 
         if (!is_dir($this->path)) {
-            mkdir($this->path);
+            mkdir($this->path, 0700);
         }
 
         if (!is_dir($this->path.$timedir)) {
-            mkdir($this->path.$timedir);
+            mkdir($this->path.$timedir, 0700);
         }
 
         $this->path = $this->path.$timedir;
