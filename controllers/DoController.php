@@ -182,6 +182,11 @@ class DoController extends Controller
             flush();
             readfile($file);
             exit;
+        }else{
+            echo "<pre>";
+            print_r(['file not exist',$file]);
+            echo "</pre>";
+            die;
         }
     }
 }
